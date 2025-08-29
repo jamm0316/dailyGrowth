@@ -22,6 +22,7 @@
    - 하단 nav의 +버튼 클릭으로 할 일 생성 가능
    - <img width="365" alt="image" src="https://github.com/user-attachments/assets/65077034-3fef-416e-9ce5-ff4bb45b1547" />
  
+5. 할일, 프로젝트 수정, 삭제 기능
 
 ## 🛠 소스 빌드 및 실행 방법
 
