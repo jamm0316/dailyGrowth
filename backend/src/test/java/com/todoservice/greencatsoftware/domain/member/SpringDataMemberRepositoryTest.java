@@ -1,5 +1,6 @@
 package com.todoservice.greencatsoftware.domain.member;
 
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.greencatsoftware.domain.member.domain.entity.Member;
 import com.todoservice.greencatsoftware.domain.member.infrastructure.persistence.SpringDataMemberJpaRepository;
 import jakarta.validation.ConstraintViolationException;
@@ -25,7 +26,12 @@ public class SpringDataMemberRepositoryTest {
     @DisplayName("insert 성공")
     public void persist_ok_all_constraints() throws Exception {
         //given
-        Member member = Member.create("test@email.com", "Test1234@!#$", null, "testName");
+        Member member = Member.create("test@email.com",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "Test1234@!#$",
+                null,
+                "testName");
 
         //when
         Member saved = memberRepository.saveAndFlush(member);
@@ -38,7 +44,12 @@ public class SpringDataMemberRepositoryTest {
     @DisplayName("email 형식이 아니면 persist 시점에 ConstraintViolationException")
     public void persist_fail_invalid_email() throws Exception {
         //given
-        Member member = Member.create("asd", "Test1234@!#$", null, "testName");
+        Member member = Member.create("asd",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "Test1234@!#$",
+                null,
+                "testName");
 
         //then
         assertThatThrownBy(() -> memberRepository.saveAndFlush(member))
@@ -50,7 +61,12 @@ public class SpringDataMemberRepositoryTest {
     @DisplayName("password 패턴 위반이면 persist 시점에 ConstraintViolationException")
     public void persist_fail_invalid_password() throws Exception {
         //given
-        Member member = Member.create("email@email.com", "123456789", null, "testName");
+        Member member = Member.create("email@email.com",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "123456789",
+                null,
+                "testName");
 
         //then
         assertThatThrownBy(() -> memberRepository.saveAndFlush(member))
@@ -62,7 +78,13 @@ public class SpringDataMemberRepositoryTest {
     @DisplayName("password 길이가 8자 이하면 persist 시점에 ConstraintViolationException")
     public void persist_fail_invalid_password_size() throws Exception {
         //given
-        Member member = Member.create("email@email.com", "1234", null, "testName");
+        Member member = Member.create(
+                "email@email.com",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "1234",
+                null,
+                "testName");
 
         //then
         assertThatThrownBy(() -> memberRepository.saveAndFlush(member))
@@ -74,8 +96,19 @@ public class SpringDataMemberRepositoryTest {
     @DisplayName("email UNIQUE 위반 시 DataIntegrityViolationException")
     public void persist_fail_unique_constraint() throws Exception {
         //given
-        Member member1 = Member.create("email@email.com", "Test1234@!#$", null, "testName1");
-        Member member2 = Member.create("email@email.com", "1234Test@!#$", null, "testName2");
+        Member member1 = Member.create("email@email.com",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "Test1234@!#$",
+                null,
+                "testName1");
+        Member member2 = Member.create(
+                "email@email.com",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "1234Test@!#$",
+                null,
+                "testName2");
 
         //when
         memberRepository.saveAndFlush(member1);

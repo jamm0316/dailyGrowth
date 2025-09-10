@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberFactory {
     public Member createMember(MemberCreateRequest request) {
-        return Member.create(request.email(), request.password(), request.profileImageUrl(), request.name());
+        return Member.create(
+                request.email(),
+                request.provider(),
+                request.providerId(),
+                request.password(),
+                request.profileImageUrl(),
+                request.name());
     }
 }

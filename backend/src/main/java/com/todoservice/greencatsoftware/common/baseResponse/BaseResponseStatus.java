@@ -29,7 +29,8 @@ public enum BaseResponseStatus {
     MISSING_PASSWORD_FOR_MEMBER(false, 3002, "Member의 password는 필수입니다."),
     MISSING_NAME_FOR_MEMBER(false, 3003, "Member의 name는 필수입니다."),
     NOT_FOUND_MEMBER(false, 3004, "유효하지 않은 멤버 입니다"),
-    KAKAO_REDIRECT_MISMATCH(false, 3001, "카카오 Redirect URI가 일치하지 않습니다."),
+    KAKAO_REDIRECT_MISMATCH(false, 3005, "카카오 Redirect URI가 일치하지 않습니다."),
+    MISSING_PROVIDER_ID_FOR_MEMBER(false, 3006, "Member의 provider_id는 필수입니다."),
 
     /**
      * 5000: JWT 오류
