@@ -24,5 +24,10 @@ public interface SpringDataMemberJpaRepository extends JpaRepository<Member, Lon
         public Member save(Member member) {
             return jpa.save(member);
         }
+
+        @Override
+        public Optional<Member> findById(Long id) {
+            return jpa.findById(id);
+        }
     }
 }
