@@ -1,4 +1,4 @@
-package com.todoservice.greencatsoftware.config.security.jwt;
+package com.todoservice.greencatsoftware.config.security.token;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
