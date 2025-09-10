@@ -1,6 +1,6 @@
 package com.todoservice.greencatsoftware.common.util;
 
-import com.todoservice.greencatsoftware.config.security.jwt.TokenResponse;
+import com.todoservice.greencatsoftware.config.security.token.TokenResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
