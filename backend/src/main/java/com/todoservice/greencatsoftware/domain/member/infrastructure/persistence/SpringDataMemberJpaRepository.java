@@ -1,5 +1,6 @@
 package com.todoservice.greencatsoftware.domain.member.infrastructure.persistence;
 
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.greencatsoftware.domain.member.domain.entity.Member;
 import com.todoservice.greencatsoftware.domain.member.domain.port.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 public interface SpringDataMemberJpaRepository extends JpaRepository<Member, Long> {
+
+    Optional<Member> findByProviderAndProviderId(OAuth2Provider provider, String string);
 
     @Repository
     @RequiredArgsConstructor
@@ -28,6 +31,11 @@ public interface SpringDataMemberJpaRepository extends JpaRepository<Member, Lon
         @Override
         public Optional<Member> findById(Long id) {
             return jpa.findById(id);
+        }
+
+        @Override
+        public Optional<Member> findByProviderAndProviderId(OAuth2Provider provider, String string) {
+            return jpa.findByProviderAndProviderId(provider, string);
         }
     }
 }
