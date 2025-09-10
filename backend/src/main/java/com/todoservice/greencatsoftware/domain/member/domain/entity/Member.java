@@ -2,6 +2,7 @@ package com.todoservice.greencatsoftware.domain.member.domain.entity;
 
 import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
 import com.todoservice.greencatsoftware.common.exception.BaseException;
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -24,8 +25,8 @@ public class Member {
     @Email(message = "이메일 형식이 올바르지 않습니다.")
     private String email;
 
-    //    @Enumerated(EnumType.STRING)
-//    private OAuth2Provider provider;
+    @Enumerated(EnumType.STRING)
+    private OAuth2Provider provider;
 
     private String providerId;
 
@@ -42,18 +43,25 @@ public class Member {
     @Column(nullable = false)
     private String name;
 
-    public Member(String email, String password, String profileImageUrl, String name) {
-        validateDomainInvariants(email, password, name);
+    public Member(String email, OAuth2Provider provider, String providerId,
+                  String password, String profileImageUrl, String name) {
+        validateDomainInvariants(email, providerId, password, name);
 
         this.email = email;
+        this.provider = provider;
+        this.providerId = providerId;
         this.password = password;
         this.profileImageUrl = profileImageUrl;
         this.name = name;
     }
 
-    private void validateDomainInvariants(String email, String password, String name) {
+    private void validateDomainInvariants(String email, String providerId, String password, String name) {
         if (email == null || email.trim().isEmpty()) {
             throw new BaseException(BaseResponseStatus.MISSING_EMAIL_FOR_MEMBER);
+        }
+
+        if (providerId == null || providerId.trim().isEmpty()) {
+            throw new BaseException(BaseResponseStatus.MISSING_PROVIDER_ID_FOR_MEMBER);
         }
 
         if (password == null || password.trim().isEmpty()) {
@@ -65,8 +73,9 @@ public class Member {
         }
     }
 
-    public static Member create(String email, String password, String profileImageUrl, String name) {
-        return new Member(email, password, profileImageUrl, name);
+    public static Member create(String email, OAuth2Provider provider, String providerId,
+                                String password, String profileImageUrl, String name) {
+        return new Member(email, provider, providerId, password, profileImageUrl, name);
     }
 
     public void changeEmail(String email) {
