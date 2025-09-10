@@ -6,8 +6,10 @@ import com.todoservice.greencatsoftware.common.util.FingerprintUtil;
 import com.todoservice.greencatsoftware.config.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,10 +18,13 @@ import java.util.UUID;
 @Log4j2
 public class TokenService {
     private final JwtProvider jwtProvider;
+    private final RedisTemplate<String, String> redisTemplate;
     private final String RT_PREFIX = "rt";
     private final String H_REFRESH_TOKEN = "refreshToken";
     private final String H_UA_HASH = "uaHash";
     private final String H_IP_PREFIX = "ipPrefix";
+    private final String H_LAST_SEEN = "lastSeen";
+    private final String H_CREATED_AT = "createAt";
 
     public TokenResponse generateTokenPair(String userId, String uaHash, String ipPrefix) {
         String accessToken = jwtProvider.generateToken(userId);
@@ -28,6 +33,15 @@ public class TokenService {
         String key = rtKey(userId, deviceId);
         String refreshToken = UUID.randomUUID().toString();
 
+        redisTemplate.opsForHash().putAll(key, Map.of(
+                H_REFRESH_TOKEN, refreshToken,
+                H_UA_HASH, uaHash,
+                H_IP_PREFIX, ipPrefix,
+                H_CREATED_AT, String.valueOf(System.currentTimeMillis()),
+                H_LAST_SEEN, String.valueOf(System.currentTimeMillis())
+        ));
+
+        redisTemplate.expire(key, Duration.ofDays(7));
         return new TokenResponse(accessToken, refreshToken);
     }
 
@@ -35,6 +49,14 @@ public class TokenService {
         String userIdFromToken = jwtProvider.getUserIdFromToken(accessToken);
         String deviceId = FingerprintUtil.deviceId(uaHashNow, ipPrefixNow);
         String key = rtKey(userIdFromToken, deviceId);
+
+        Map<Object, Object> stored = redisTemplate.opsForHash().entries(key);
+
+        validateFingerprintAndRt(userIdFromToken, deviceId, refreshToken, uaHashNow, ipPrefixNow, stored);
+
+        String newRefreshToken = UUID.randomUUID().toString();
+        redisTemplate.opsForHash().put(key, H_REFRESH_TOKEN, newRefreshToken);
+        redisTemplate.opsForHash().put(key, H_LAST_SEEN, String.valueOf(System.currentTimeMillis()));
 
         return jwtProvider.generateToken(userIdFromToken);
     }
@@ -73,5 +95,16 @@ public class TokenService {
 
     private static String toStr(Object o) {
         return (o == null) ? null : o.toString();
+    }
+
+    public void deleteRefreshToken(String accessToken, String refreshToken) {
+        String userIdFromToken = jwtProvider.getUserIdFromToken(accessToken);
+        String refreshTokenByUserId = redisTemplate.opsForValue().get(userIdFromToken);
+
+        if (refreshTokenByUserId != null && refreshTokenByUserId.equals(refreshToken)) {
+            redisTemplate.delete(userIdFromToken);
+        } else {
+            throw new BaseException(BaseResponseStatus.INVALID_REFRESH_TOKEN);
+        }
     }
 }
