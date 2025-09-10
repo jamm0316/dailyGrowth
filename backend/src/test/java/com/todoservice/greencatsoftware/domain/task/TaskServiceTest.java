@@ -36,7 +36,6 @@ import static org.mockito.Mockito.*;
 public class TaskServiceTest {
     @Mock private TaskRepository taskRepository;
     @Mock private ProjectService projectService;
-    @Mock private ColorService colorService;
     @Mock private TaskFactory factory;
     @InjectMocks private TaskService taskService;
 

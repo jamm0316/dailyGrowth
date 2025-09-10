@@ -4,6 +4,7 @@ import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
 import com.todoservice.greencatsoftware.common.enums.Status;
 import com.todoservice.greencatsoftware.common.enums.Visibility;
 import com.todoservice.greencatsoftware.common.exception.BaseException;
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.greencatsoftware.domain.color.application.ColorService;
 import com.todoservice.greencatsoftware.domain.color.entity.Color;
 import com.todoservice.greencatsoftware.domain.member.domain.entity.Member;
@@ -42,7 +43,13 @@ public class ProjectServiceTest {
     @InjectMocks
     private ProjectService projectService;
 
-    private Member member = Member.create("member1@test.com", "12345", "null", "testName");
+    private Member member = Member.create(
+            "member1@test.com",
+            OAuth2Provider.KAKAO,
+            "asevanoeqointqewr123",
+            "12345",
+            "null",
+            "testName");
 
     @Test
     @DisplayName("listProject: 전체 조회")

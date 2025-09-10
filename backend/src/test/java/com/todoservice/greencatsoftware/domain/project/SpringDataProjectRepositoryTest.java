@@ -2,6 +2,7 @@ package com.todoservice.greencatsoftware.domain.project;
 
 import com.todoservice.greencatsoftware.common.enums.Status;
 import com.todoservice.greencatsoftware.common.enums.Visibility;
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.greencatsoftware.domain.color.entity.Color;
 import com.todoservice.greencatsoftware.domain.color.infrastructure.persistence.SpringDataColorRepository;
 import com.todoservice.greencatsoftware.domain.member.domain.entity.Member;
@@ -41,7 +42,13 @@ public class SpringDataProjectRepositoryTest {
     private Member member;
     @BeforeEach
     public void setUp() throws Exception {
-        member = Member.create("member1@test.com", "Ghwimreik12@", "null", "testName");
+        member = Member.create(
+                "member1@test.com",
+                OAuth2Provider.KAKAO,
+                "asevanoeqointqewr123",
+                "Ghwimreik12@",
+                "null",
+                "testName");
         memberRepository.saveAndFlush(member);
     }
 

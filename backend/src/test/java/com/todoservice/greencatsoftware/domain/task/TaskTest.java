@@ -6,6 +6,7 @@ import com.todoservice.greencatsoftware.common.enums.Priority;
 import com.todoservice.greencatsoftware.common.enums.Status;
 import com.todoservice.greencatsoftware.common.enums.Visibility;
 import com.todoservice.greencatsoftware.common.exception.BaseException;
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.greencatsoftware.domain.color.entity.Color;
 import com.todoservice.greencatsoftware.domain.member.domain.entity.Member;
 import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
@@ -26,7 +27,13 @@ public class TaskTest {
     private Color color(String name, String hexCode) {
         return Color.create(name, hexCode);
     }
-    private Member member = Member.create("member1@test.com", "12345", "null", "testName");
+    private Member member = Member.create(
+            "member1@test.com",
+            OAuth2Provider.KAKAO,
+            "asevanoeqointqewr123",
+            "12345",
+            "null",
+            "testName");
 
     private Project projectWithPeriod() {
         return Project.createWithPeriod(color("RED", "#FF0000"), member, "프로젝트", Status.PLANNING,
