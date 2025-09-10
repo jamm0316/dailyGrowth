@@ -1,5 +1,8 @@
 package com.todoservice.greencatsoftware.domain.member.presentation.dto;
 
+import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -23,11 +26,11 @@ public record MemberCreateRequest(
         @NotBlank(message = "닉네임은 필수입니다.")
         String nickName,
         String profileImageUrl,
-        String phoneNumber
+        String phoneNumber,
 
-        // @Enumerated(EnumType.STRING)
-        // OAuth2Provider provider,
+        @Enumerated(EnumType.STRING)
+        OAuth2Provider provider,
 
-        // String providerId;
+        String providerId
 ) {
 }
