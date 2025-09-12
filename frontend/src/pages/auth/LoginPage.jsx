@@ -42,14 +42,14 @@ const LoginPage = () => {
       {currentScreen == SCREEN.AUTH && (
         <AuthScreen
           currentScreen={currentScreen}
-          onNavigateBack={() => setCurrentScreen("welcome")}
-          onLogin={() => setCurrentScreen("login")}
+          onNavigateBack={goWelcome}
+          onLogin={goLogin}
         />
       )}
       {currentScreen == SCREEN.LOGIN && (
         <LoginFormScreen
           currentScreen={currentScreen}
-          onNavigateBack={() => setCurrentScreen("auth")}
+          onNavigateBack={goAuth}
           formData={formData}
           onChange={handleInputChange}
           showPassword={showPassword}
