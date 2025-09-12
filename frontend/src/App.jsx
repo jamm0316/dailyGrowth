@@ -1,5 +1,3 @@
-import Header from "/src/components/layout/Header.jsx";
-import BottomNav from "/src/components/layout/BottomNav.jsx";
 import {Outlet} from "react-router-dom";
 
 function App() {
