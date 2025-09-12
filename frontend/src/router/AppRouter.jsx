@@ -5,7 +5,7 @@ import {Route, Routes,} from "react-router-dom";
 import App from "/src/App.jsx";
 import {ROUTES} from "/src/router/routes.js";
 import TaskCreatePage from "/src/pages/TaskCreatePage.jsx";
-import LoginPage from "/src/pages/LoginPage.jsx";
+import LoginPage from "/src/pages/auth/LoginPage.jsx";
 
 const AppRouter = () => {
   return (
