@@ -1,8 +1,8 @@
 import {Sprout, ArrowUp, Mail, Lock, EyeOff, Eye} from "lucide-react";
 import React, {useState} from 'react';
-import WelcomeScreen from "/src/pages/WelcomeScreen.jsx";
-import AuthScreen from "/src/pages/AuthScreen.jsx";
-import LoginFormScreen from "/src/pages/LoginFormScreen.jsx";
+import WelcomeScreen from "/src/pages/auth/WelcomeScreen.jsx";
+import AuthScreen from "/src/pages/auth/AuthScreen.jsx";
+import LoginFormScreen from "/src/pages/auth/LoginFormScreen.jsx";
 
 const SCREEN = { WELCOME: "welcome", AUTH: "auth", LOGIN: "login"}
 
