@@ -1,6 +1,11 @@
 import { TrendingUp } from "lucide-react";
+import {useOAuthLogin} from "/src/hooks/oauth/useOAuthLogin.jsx";
 
+const PROVIDER = {KAKAO: "kakao", NAVER: "naver", GOOGLE: "google"}
 const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
+
+  const {loginWithProvider, loading, error} = useOAuthLogin();
+
   return (
     <div
       className={`absolute inset-0 bg-gradient-to-b from-blue-50 via-purple-50 to-green-50 transition-transform duration-500 ${
@@ -34,7 +39,9 @@ const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
           <button
             aria-label="카카오로 로그인"
             className="w-full h-12 rounded-full bg-[#FEE500] flex items-center gap-3 px-4 shadow-sm hover:shadow-md transition-all"
-            onClick={() => {/* TODO: kakao oauth */}}
+            onClick={() => {
+              window.location.assign("http://localhost:8080/api/v1/oauth/login/kakao")
+            }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="#3C1E1E" aria-hidden="true">
               <path d="M12 3C6.48 3 2 6.76 2 11.14c0 2.7 1.73 5.07 4.36 6.53l-.86 3.2a.6.6 0 0 0 .9.67l3.56-2.23c.67.1 1.35.15 2.04.15 5.52 0 10-3.76 10-8.14S17.52 3 12 3z"/>
@@ -46,7 +53,7 @@ const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
           <button
             aria-label="네이버로 로그인"
             className="w-full h-12 rounded-full bg-[#03C75A] flex items-center gap-3 px-4 shadow-sm hover:shadow-md transition-all"
-            onClick={() => {/* TODO: naver oauth */}}
+            onClick={() => {loginWithProvider(PROVIDER.NAVER)}}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true">
               <path d="M5 4h5.6l2.9 4.2V4H19v16h-5.6L10.5 15.8V20H5V4z"/>
@@ -59,6 +66,7 @@ const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
             aria-label="구글로 로그인"
             className="w-full h-12 rounded-full bg-[#F2F2F2] flex items-center gap-3 px-4
                border border-[#E6E6E6] shadow-sm hover:shadow-md transition-all"
+            onClick={() => {loginWithProvider(PROVIDER.GOOGLE)}}
           >
             {/* Google G */}
             <svg width="22" height="22" viewBox="0 0 48 48" aria-hidden="true">
@@ -70,6 +78,13 @@ const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
             <span className="text-[15px] font-semibold text-[#222]">구글 로그인</span>
           </button>
         </div>
+
+        {/* 에러 메시지 */}
+        {error && (
+          <p className="text-sm text-red-600 mb-4">
+            로그인에 실패했어요. 잠시 후 다시 시도해 주세요.
+          </p>
+        )}
 
         {/* Traditional Login */}
         <div className="text-center space-y-4">
