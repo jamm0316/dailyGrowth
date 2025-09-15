@@ -14,7 +14,6 @@ public enum BaseResponseStatus {
      */
     VALIDATION_ERROR(false, 2001, "요청 데이터가 유효하지 않습니다."),
     NOTFOUND_MEMBER(false, 2003, "회원이 존재하지 않습니다."),
-    INVALID_REFRESH_TOKEN(false, 2004, "유효하지 않거나 만료된 리프레시 토큰입니다."),
 
     /**
      * 3000: 서버 오류
@@ -40,7 +39,8 @@ public enum BaseResponseStatus {
     TOKEN_EXPIRED(false, 5003, "JWT 토큰이 만료되었습니다."),
     TOKEN_UNSUPPORTED(false, 5004, "지원되지 않는 JWT 토큰입니다."),
     TOKEN_ILLEGAL_ARGUMENT(false, 5006, "JWT 클레임이 비어 있거나 잘못 되었습니다."),
-
+    INVALID_REFRESH_TOKEN(false, 3007, "유효하지 않거나 만료된 리프레시 토큰입니다."),
+    ACCESS_TOKEN_IS_NULL(false, 3008, "Access Token이 null 입니다."),
     /**
      * 6000: Project 오류
      */

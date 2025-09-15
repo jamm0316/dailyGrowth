@@ -1,8 +1,10 @@
 package com.todoservice.greencatsoftware.domain.auth.presentation;
 
 import com.todoservice.greencatsoftware.common.baseResponse.BaseResponse;
+import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
 import com.todoservice.greencatsoftware.common.util.CookieUtil;
 import com.todoservice.greencatsoftware.common.util.FingerprintUtil;
+import com.todoservice.greencatsoftware.config.security.jwt.JwtProvider;
 import com.todoservice.greencatsoftware.config.security.token.TokenResponse;
 import com.todoservice.greencatsoftware.domain.auth.application.AuthService;
 import com.todoservice.greencatsoftware.domain.auth.application.OAuthServiceFactory;
@@ -11,6 +13,8 @@ import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuthUserInf
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -18,6 +22,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/v1/oauth")
 @RequiredArgsConstructor
+@Log4j2
 public class OAuthController {
     private final OAuthServiceFactory oAuthServiceFactory;
     private final AuthService authService;
@@ -30,11 +35,11 @@ public class OAuthController {
     }
 
     @GetMapping("callback/{provider}")
-    public BaseResponse<Object> handleCallback(
+    public void handleCallback(
             @PathVariable String provider,
             @RequestParam String code,
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response) throws IOException {
 
         OAuthService oAuthService = oAuthServiceFactory.getService(provider);
         String accessToken = oAuthService.getAccessToken(code);
@@ -44,9 +49,16 @@ public class OAuthController {
         String ipPrefix = FingerprintUtil.ipPrefix(FingerprintUtil.extractClientIp(request));
 
         TokenResponse tokenResponse = authService.login(userInfo, uaHash, ipPrefix);
-
         CookieUtil.addTokenCookies(response, tokenResponse);
 
-        return new BaseResponse<>(tokenResponse);
+        response.sendRedirect("http://localhost:5173/oauth/callback?provider=" + provider);
+    }
+
+    @GetMapping("/me")
+    public BaseResponse<Object> me(Authentication authentication) {
+        if (authentication == null) {
+            return new BaseResponse<>(BaseResponseStatus.ACCESS_TOKEN_IS_NULL);
+        }
+        return new BaseResponse<>(BaseResponseStatus.SUCCESS);
     }
 }
