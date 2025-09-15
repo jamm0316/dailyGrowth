@@ -33,7 +33,7 @@ public class CookieUtil {
         Cookie cookie = new Cookie(tokenName, null);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(false);
         cookie.setMaxAge(0);
         cookie.setAttribute("SameSite", "Strict");
         response.addCookie(cookie);
