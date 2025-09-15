@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const API_BASE_URL = window.location.hostname === 'localhost'
-  ? 'http://localhost:8080/api'
-  : '/api'  //배포수 수정 예정
+  ? 'http://localhost:8080/api/'
+  : '/api/'  //배포수 수정 예정
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
