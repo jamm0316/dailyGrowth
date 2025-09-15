@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -35,12 +33,14 @@ public class AuthService {
     }
 
     public Member signIn(OAuthUserInfo userInfo) {
-        String randomEmail = UUID.randomUUID().toString();
+        String randomEmail = java.util.UUID.randomUUID().toString() + "@email.com";
+        // 소셜 계정용 임의의 강한 비밀번호 생성(정책 충족: 대/소문자, 숫자, 특수문자, 길이)
+        String rawPassword = "Soc1al@" + java.util.UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 
         //todo: 현재 테스트 용도, 추후에 바꿀 것
         Member member = Member.create(
-                randomEmail + "@email.com", userInfo.getProvider(), userInfo.getProviderId(),
-                "{noop}social_login_user", userInfo.getProfileImageUrl(), userInfo.getName());
+                randomEmail, userInfo.getProvider(), userInfo.getProviderId(),
+                rawPassword, userInfo.getProfileImageUrl(), userInfo.getName());
         return memberRepository.save(member);
     }
 }
