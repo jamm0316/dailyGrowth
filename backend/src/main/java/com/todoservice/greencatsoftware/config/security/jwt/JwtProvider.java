@@ -5,6 +5,7 @@ import com.todoservice.greencatsoftware.common.exception.BaseException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class JwtProvider {
     private final JwtProperties jwtProperties;
     private final UserDetailsService userDetailsService;
@@ -53,14 +55,19 @@ public class JwtProvider {
                     .parseClaimsJws(token);
             return true;
         } catch (SecurityException | SignatureException e) {
+            log.error("[AUTH_DEBUG] Invalid JWT Signature: {}", e.getMessage());
             throw new BaseException(BaseResponseStatus.TOKEN_INVALID_SIGNATURE);
         } catch (MalformedJwtException e) {
+            log.error("[AUTH_DEBUG] Invalid JWT Token: {}", e.getMessage());
             throw new BaseException(BaseResponseStatus.TOKEN_MALFORMED);
         } catch (ExpiredJwtException e) {
+            log.error("[AUTH_DEBUG] Expired JWT Token: {}", e.getMessage());
             throw new BaseException(BaseResponseStatus.TOKEN_EXPIRED);
         } catch (UnsupportedJwtException e) {
+            log.error("[AUTH_DEBUG] Unsupported JWT Token: {}", e.getMessage());
             throw new BaseException(BaseResponseStatus.TOKEN_UNSUPPORTED);
         } catch (IllegalArgumentException e) {
+            log.error("[AUTH_DEBUG] JWT claims si empty: {}", e.getMessage());
             throw new BaseException(BaseResponseStatus.TOKEN_ILLEGAL_ARGUMENT);
         }
     }
