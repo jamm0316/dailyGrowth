@@ -4,10 +4,8 @@ import com.todoservice.greencatsoftware.common.baseResponse.BaseResponse;
 import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
 import com.todoservice.greencatsoftware.common.util.CookieUtil;
 import com.todoservice.greencatsoftware.common.util.FingerprintUtil;
-import com.todoservice.greencatsoftware.config.security.jwt.JwtProvider;
 import com.todoservice.greencatsoftware.config.security.token.TokenResponse;
 import com.todoservice.greencatsoftware.domain.auth.application.AuthService;
-import com.todoservice.greencatsoftware.domain.auth.application.OAuthServiceFactory;
 import com.todoservice.greencatsoftware.domain.auth.domain.oauth.port.OAuthService;
 import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuthUserInfo;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,18 +16,19 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/oauth")
 @RequiredArgsConstructor
 @Log4j2
 public class OAuthController {
-    private final OAuthServiceFactory oAuthServiceFactory;
+    private final Map<String, OAuthService> oAuthServices;
     private final AuthService authService;
 
     @GetMapping("login/{provider}")
     public void redirectToProvider(@PathVariable String provider, HttpServletResponse response) throws IOException {
-        OAuthService oAuthService = oAuthServiceFactory.getService(provider);
+        OAuthService oAuthService = oAuthServices.get(provider.toLowerCase());
         String authUrl = oAuthService.buildAuthorizationUrl(provider);
         response.sendRedirect(authUrl);
     }
@@ -41,7 +40,7 @@ public class OAuthController {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
 
-        OAuthService oAuthService = oAuthServiceFactory.getService(provider);
+        OAuthService oAuthService = oAuthServices.get(provider.toLowerCase());
         String accessToken = oAuthService.getAccessToken(code);
         OAuthUserInfo userInfo = oAuthService.getUserInfo(accessToken);
 
