@@ -70,18 +70,14 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script_stop: true
+          timeout: "60s"
+          command_timeout: "15m"
           script: |
             set -e
             cd ~/app/deploy
-
-            # GHCR 로그인
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin
-
-            # 태그 지정(기본: release-latest), 필요시 workflow_dispatch로 sha-xxxxxxx 입력해 롤백 가능
             export BACK_TAG="${{ github.event.inputs.backend_tag || 'release-latest' }}"
             export FRONT_TAG="${FRONT_TAG:-release-latest}"
-
             docker compose pull backend
             docker compose up -d backend
             docker image prune -af --filter "until=168h"
