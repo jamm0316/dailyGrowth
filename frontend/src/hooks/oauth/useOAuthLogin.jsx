@@ -1,5 +1,4 @@
 import {useCallback, useState} from "react";
-import {oauthApi} from "/src/api/oauth/oauthApi.js"; // 경로는 프로젝트 구조에 맞게 조정
 
 export function useOAuthLogin({onSuccess, onError} = {}) {
   const [loading, setLoading] = useState(false);
