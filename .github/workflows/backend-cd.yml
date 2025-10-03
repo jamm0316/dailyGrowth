@@ -69,7 +69,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1   # EC2 리전 맞추기 (현재 us-east-1)
+          aws-region: us-east-1
   
       - name: Deploy via SSM
         run: |
@@ -78,10 +78,11 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --comment "Deploy backend" \
             --parameters 'commands=[
-              "cd ~/app/deploy",
+              "set -e",
+              "cd /home/ubuntu/app/deploy",
               "echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin",
-              "docker compose pull backend",
-              "docker compose up -d backend",
+              "docker compose pull app",
+              "docker compose up -d --pull=always app",
               "docker image prune -af",
               "docker builder prune -af"
             ]'
