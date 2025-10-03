@@ -15,7 +15,7 @@ concurrency:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_FRONTEND: ghcr.io/${{ github.repository_owner }}/dialygrowth-frontend
+  IMAGE_FRONTEND: ghcr.io/jamm0316/dailygrowth-frontend
 
 jobs:
   build-and-push:
