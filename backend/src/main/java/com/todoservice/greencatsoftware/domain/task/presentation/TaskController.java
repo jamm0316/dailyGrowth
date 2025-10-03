@@ -2,11 +2,12 @@ package com.todoservice.greencatsoftware.domain.task.presentation;
 
 import com.todoservice.greencatsoftware.common.baseResponse.BaseResponse;
 import com.todoservice.greencatsoftware.common.enums.Status;
-import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
-import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectFieldUpdateRequest;
 import com.todoservice.greencatsoftware.domain.task.application.TaskService;
 import com.todoservice.greencatsoftware.domain.task.domain.entity.Task;
-import com.todoservice.greencatsoftware.domain.task.presentation.dto.*;
+import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskCreateRequest;
+import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskDetailResponse;
+import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskFieldUpdateRequest;
+import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskSummaryResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
