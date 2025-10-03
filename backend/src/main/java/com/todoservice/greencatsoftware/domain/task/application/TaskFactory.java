@@ -1,9 +1,7 @@
 package com.todoservice.greencatsoftware.domain.task.application;
 
-import com.todoservice.greencatsoftware.domain.color.entity.Color;
-import com.todoservice.greencatsoftware.domain.color.application.ColorService;
-import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
 import com.todoservice.greencatsoftware.domain.project.application.ProjectService;
+import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
 import com.todoservice.greencatsoftware.domain.task.domain.entity.Task;
 import com.todoservice.greencatsoftware.domain.task.domain.vo.Schedule;
 import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskCreateRequest;
