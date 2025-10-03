@@ -75,7 +75,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
   
-      # InstanceId 직접 지정
       - name: Deploy via SSM
         run: |
           aws ssm send-command \
@@ -84,7 +83,7 @@ jobs:
             --comment "Deploy frontend (nginx)" \
             --parameters 'commands=[
               "set -e",
-              "cd ~/app/deploy",
+              "cd /home/ubuntu/app/deploy",
               "echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USER }} --password-stdin",
               "docker compose pull nginx",
               "docker compose up -d --no-deps --pull=always nginx",
