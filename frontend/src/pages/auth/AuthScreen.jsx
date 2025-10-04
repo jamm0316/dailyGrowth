@@ -124,4 +124,3 @@ const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
 };
 
 export default AuthScreen;
-
