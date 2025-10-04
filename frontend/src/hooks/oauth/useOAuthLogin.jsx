@@ -13,7 +13,7 @@ export function useOAuthLogin({ onSuccess, onError } = {}) {
       setError(null);
 
       try {
-        window.location.href = ENDPOINTS.LOGIN(provider);
+        window.location.href = `http://dailygrowth.shop/api/${ENDPOINTS.LOGIN(provider)}`;
         onSuccess?.();
       } catch (e) {
         setError(e);
