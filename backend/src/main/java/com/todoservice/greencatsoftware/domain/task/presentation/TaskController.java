@@ -62,3 +62,4 @@ public class TaskController {
         taskService.updateTaskStatus(id, newStatus);
     }
 }
+
