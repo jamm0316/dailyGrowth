@@ -30,6 +30,7 @@ public class OAuthController {
     public void redirectToProvider(@PathVariable String provider, HttpServletResponse response) throws IOException {
         OAuthService oAuthService = oAuthServices.get(provider.toLowerCase());
         String authUrl = oAuthService.buildAuthorizationUrl(provider);
+        log.info("Redirecting to authUrl: " + authUrl);
         response.sendRedirect(authUrl);
     }
 
