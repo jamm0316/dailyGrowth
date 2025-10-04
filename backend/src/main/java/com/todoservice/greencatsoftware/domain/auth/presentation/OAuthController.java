@@ -51,7 +51,7 @@ public class OAuthController {
         TokenResponse tokenResponse = authService.login(userInfo, uaHash, ipPrefix);
         CookieUtil.addTokenCookies(response, tokenResponse);
 
-        response.sendRedirect("http://localhost:5173/oauth/callback?provider=" + provider);
+        response.sendRedirect("http://dailygrowth.shop/oauth/callback?provider=" + provider);
     }
 
     @GetMapping("/me")
