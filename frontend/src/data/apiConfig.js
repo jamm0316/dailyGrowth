@@ -8,7 +8,7 @@ const getBaseUrl = () => {
   // }
 
   // 3. 운영 서버일 경우 현재 origin 사용
-  return `${window.location.protocol}//${window.location.host}`;
+  return `${window.location.protocol}//dailygrowth.shop`;
 };
 
 export const API_CONFIG = {
