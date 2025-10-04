@@ -1,6 +1,6 @@
 // src/hooks/useOAuthLogin.js
 import { useCallback, useState } from "react";
-import { API_CONFIG } from "/src/data/apiConfig.js";
+import {ENDPOINTS} from "/src/api/oauth/endpoints.js";
 
 export function useOAuthLogin({ onSuccess, onError } = {}) {
   const [loading, setLoading] = useState(false);
@@ -13,10 +13,7 @@ export function useOAuthLogin({ onSuccess, onError } = {}) {
       setError(null);
 
       try {
-        // ✅ context path를 동적으로 붙임
-        const loginUrl = `${API_CONFIG.BASE_URL}/api/v1/oauth/login/${provider}`;
-        window.location.href = loginUrl;
-
+        window.location.href = ENDPOINTS.LOGIN(provider);
         onSuccess?.();
       } catch (e) {
         setError(e);
