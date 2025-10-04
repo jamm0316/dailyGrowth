@@ -3,9 +3,9 @@ const getBaseUrl = () => {
   if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
 
   // 2. 로컬 개발 환경 자동 감지
-  if (window.location.hostname === "localhost") {
-    return "http://localhost:8080"; // 백엔드 포트 직접 호출
-  }
+  // if (window.location.hostname === "localhost") {
+  //   return "http://localhost:8080"; // 백엔드 포트 직접 호출
+  // }
 
   // 3. 운영 서버일 경우 현재 origin 사용
   return `${window.location.protocol}//${window.location.host}`;
