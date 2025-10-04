@@ -30,7 +30,7 @@ const AuthScreen = ({currentScreen, onNavigateBack, onLogin}) => {
         </div>
 
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">성장할 준비 되셨나요??</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-2">함께 성장할 준비 되셨나요??</h2>
           <p className="text-gray-600">Choose how you'd like to continue</p>
         </div>
 
