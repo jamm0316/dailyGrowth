@@ -16,7 +16,8 @@ export function useAuthCheck() {
         try {
           await oauthApi.me();
           if (!canceled) setState({ loading: false, ok: true });
-        } catch {
+        } catch(e) {
+          console.log("Auth check failed", e)
           if (!canceled) setState({ loading: false, ok: false });
         }
       })();

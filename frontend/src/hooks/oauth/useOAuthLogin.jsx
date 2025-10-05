@@ -13,7 +13,7 @@ export function useOAuthLogin({ onSuccess, onError } = {}) {
       setError(null);
 
       try {
-        const oauthUrl = `${API_BASE_URL}/api/v1/oauth/login/${provider}`
+        const oauthUrl = `${API_BASE_URL}/v1/oauth/login/${provider}`
         window.location.href = oauthUrl;
       } catch (e) {
         console.error("OAuth 리다이렉트 실패", e);
