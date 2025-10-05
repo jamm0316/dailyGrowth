@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:8080'
-  : 'http://dailygrowth.shop'
+  : 'https://dailygrowth.shop'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
