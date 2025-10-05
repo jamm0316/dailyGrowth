@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = window.location.hostname === 'http://dailygrowth.shop/api/'  //배포수 수정 예정
+export const API_BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:8080'
+  : 'http://dailygrowth.shop/api'
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
