@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-//@EnableConfigurationProperties(OAuthProperties.class)
 public class GreencatsoftwareApplication {
 
 	public static void main(String[] args) {
