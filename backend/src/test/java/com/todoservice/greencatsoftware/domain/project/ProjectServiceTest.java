@@ -4,6 +4,7 @@ import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
 import com.todoservice.greencatsoftware.common.enums.Status;
 import com.todoservice.greencatsoftware.common.enums.Visibility;
 import com.todoservice.greencatsoftware.common.exception.BaseException;
+import com.todoservice.greencatsoftware.config.security.principal.CustomUser;
 import com.todoservice.greencatsoftware.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.greencatsoftware.domain.color.application.ColorService;
 import com.todoservice.greencatsoftware.domain.color.entity.Color;
@@ -105,16 +106,17 @@ public class ProjectServiceTest {
         Period period = Period.of(startDate, endDate, actualEndDate);
         Project project = Project.createWithPeriod(Color.create("RED", "#FF000000"), member, "프로젝트 A", Status.PLANNING,
                 period, "프로젝트 A입니다", true, Visibility.PRIVATE);
+        CustomUser user = new CustomUser(1L, "sample", "sample@gmail.com");
 
         //when
-        when(factory.createProject(request)).thenReturn(project);
+        when(factory.createProject(user, request)).thenReturn(project);
         when(projectRepository.save(any(Project.class))).thenReturn(project);
 
-        Project saved = projectService.createProject(request);
+        Project saved = projectService.createProject(user, request);
 
         //then
         assertThat(saved).isEqualTo(project);
-        verify(factory).createProject(request);
+        verify(factory).createProject(user, request);
         verify(projectRepository).save(project);
     }
 
