@@ -1,5 +1,6 @@
 package com.todoservice.greencatsoftware.domain.project.application;
 
+import com.todoservice.greencatsoftware.config.security.principal.CustomUser;
 import com.todoservice.greencatsoftware.domain.color.entity.Color;
 import com.todoservice.greencatsoftware.domain.color.application.ColorService;
 import com.todoservice.greencatsoftware.domain.member.application.MemberService;
