@@ -58,7 +58,7 @@ public class ProjectService {
 
     @Transactional
     public Project createProject(User user, ProjectCreateRequest newProjectDTO) {
-        return projectFactory.createProject(user, newProjectDTO);
+        return projectRepository.save(projectFactory.createProject(user, newProjectDTO));
     }
 
     @Transactional
