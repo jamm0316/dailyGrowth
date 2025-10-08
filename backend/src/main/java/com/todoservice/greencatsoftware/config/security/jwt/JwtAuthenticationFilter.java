@@ -16,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -24,6 +25,11 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final String AUTHORIZATION = "Authorization";
     private final String BEARER = "Bearer ";
+    private static final List<String> EXCLUDE_PATHS = List.of(
+            "/health",
+            "/error",
+            "/favicon.ico"
+    );
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -78,6 +84,11 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         }
 
         return null;
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return EXCLUDE_PATHS.contains(request.getRequestURI());
     }
 }
 
