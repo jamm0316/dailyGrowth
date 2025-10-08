@@ -27,10 +27,17 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        log.info("[AUTH_DEBUG] JwtAuthenticationFilter started for request: {}", request.getRequestURI());
+        String uri = request.getRequestURI();
+        log.info("[AUTH_DEBUG] JwtAuthenticationFilter started for request: {}", uri);
         //1. 요청 헤더에서 JWT 추출
         String token = resolveToken(request);
         log.info("[AUTH_DEBUG] Resolved token: {}", (token != null ? "Found" : "Not Found"));
+        if ("/".equals(uri) || "/health".equals(uri)) {
+            String ua = request.getHeader("User-Agent");
+            String ip = request.getRemoteAddr();
+            log.info("[TRACE_HEALTH] {} from IP={}, UA={}", uri, ip, ua);
+        }
+
         //2. 토큰 유효성 검사
         try {
             if (token != null && jwtProvider.validToken(token)) {
