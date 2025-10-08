@@ -8,10 +8,29 @@ import java.util.Base64;
 
 public class FingerprintUtil {
     public static String extractClientIp(HttpServletRequest request) {
-        String[] headers = {"X=Forwarded-For", "X-Real-IP", "CF-Connecting-IP"};
+        String[] headers = {
+                "X-Forwarded-For",
+                "Forwarded",
+                "X-Real-IP",
+                "CF-Connecting-IP",
+                "X-Client-IP"
+        };
         for (String h : headers) {
             String v = request.getHeader(h);
-            if (v != null && !v.isBlank()) return v.split(",")[0].trim();
+            if (v != null && !v.isBlank()) {
+                String first = v.split(",")[0].trim();
+                // Forwarded 헤더 형태 보정
+                if (first.startsWith("for=")) {
+                    first = first.substring(4).trim();
+                    if (first.startsWith("\"") && first.endsWith("\"")) {
+                        first = first.substring(1, first.length() - 1);
+                    }
+                    if (first.startsWith("[") && first.contains("]")) {
+                        first = first.substring(1, first.indexOf(']')); //[IPv6]
+                    }
+                }
+                return first;
+            }
         }
         return request.getRemoteAddr();
     }
