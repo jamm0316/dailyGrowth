@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class ProjectController {
 
     @PostMapping("")
     public BaseResponse<Project> createProject(
-            @AuthenticationPrincipal CustomUser user,
+            @AuthenticationPrincipal User user,
             @Valid @RequestBody ProjectCreateRequest newProjectDTO) {
         return new BaseResponse<>(projectService.createProject(user, newProjectDTO));
     }

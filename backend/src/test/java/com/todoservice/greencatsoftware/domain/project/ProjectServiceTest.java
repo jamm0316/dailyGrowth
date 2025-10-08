@@ -22,6 +22,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -106,7 +108,11 @@ public class ProjectServiceTest {
         Period period = Period.of(startDate, endDate, actualEndDate);
         Project project = Project.createWithPeriod(Color.create("RED", "#FF000000"), member, "프로젝트 A", Status.PLANNING,
                 period, "프로젝트 A입니다", true, Visibility.PRIVATE);
-        CustomUser user = new CustomUser(1L, "sample", "sample@gmail.com");
+        User user = new User(
+                "1",
+                "sample",
+                List.of(new SimpleGrantedAuthority("ROLE_USER"))
+        );
 
         //when
         when(factory.createProject(user, request)).thenReturn(project);
