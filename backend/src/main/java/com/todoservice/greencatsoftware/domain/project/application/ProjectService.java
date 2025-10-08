@@ -6,13 +6,14 @@ import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
 import com.todoservice.greencatsoftware.common.enums.Status;
 import com.todoservice.greencatsoftware.common.enums.Visibility;
 import com.todoservice.greencatsoftware.common.exception.BaseException;
-import com.todoservice.greencatsoftware.domain.color.entity.Color;
+import com.todoservice.greencatsoftware.config.security.principal.CustomUser;
 import com.todoservice.greencatsoftware.domain.color.application.ColorService;
+import com.todoservice.greencatsoftware.domain.color.entity.Color;
 import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
 import com.todoservice.greencatsoftware.domain.project.domain.port.ProjectRepository;
 import com.todoservice.greencatsoftware.domain.project.domain.vo.Period;
-import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectDetailResponse;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectCreateRequest;
+import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectDetailResponse;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectFieldUpdateRequest;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectSummaryResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @Slf4j
@@ -57,9 +57,9 @@ public class ProjectService {
     }
 
     @Transactional
-    public Project createProject(ProjectCreateRequest newProjectDTO) {
+    public Project createProject(CustomUser user, ProjectCreateRequest newProjectDTO) {
         log.info("[PROJECT_CREATE] service.enter");
-        Project project = projectFactory.createProject(newProjectDTO);
+        Project project = projectFactory.createProject(user, newProjectDTO);
         log.info("[PROJECT_CREATE] entity.beforeSave id={}", project.getId());
         Project save = projectRepository.save(project);
         log.info("[PROJECT_CREATE] entity.afterSave");
