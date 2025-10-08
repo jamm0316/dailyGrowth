@@ -1,5 +1,6 @@
 package com.todoservice.greencatsoftware.domain.project.application;
 
+import com.todoservice.greencatsoftware.config.security.principal.CustomUser;
 import com.todoservice.greencatsoftware.domain.color.entity.Color;
 import com.todoservice.greencatsoftware.domain.color.application.ColorService;
 import com.todoservice.greencatsoftware.domain.member.application.MemberService;
@@ -16,9 +17,8 @@ public class ProjectFactory {
     private final MemberService memberService;
     private final ColorService colorService;
 
-    public Project createProject(ProjectCreateRequest request) {
-        String jwt = "1 test@email 1234 null testname";
-        Member member = memberService.getMemberByIdOrThrow(Long.parseLong(jwt.substring(0, 1)));
+    public Project createProject(CustomUser user, ProjectCreateRequest request) {
+        Member member = memberService.getMemberByIdOrThrow(user.getId());
         Color color = colorService.getColorByIdOrThrow(request.colorId());
         Period period = Period.of(request.period().startDate(), request.period().endDate(),
                                   request.period().actualEndDate());
