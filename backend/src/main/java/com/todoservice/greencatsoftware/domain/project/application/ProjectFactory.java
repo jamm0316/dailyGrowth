@@ -8,6 +8,7 @@ import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
 import com.todoservice.greencatsoftware.domain.project.domain.vo.Period;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectCreateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,9 +17,8 @@ public class ProjectFactory {
     private final MemberService memberService;
     private final ColorService colorService;
 
-    public Project createProject(ProjectCreateRequest request) {
-        String jwt = "1 test@email 1234 null testname";
-        Member member = memberService.getMemberByIdOrThrow(Long.parseLong(jwt.substring(0, 1)));
+    public Project createProject(User user, ProjectCreateRequest request) {
+        Member member = memberService.getMemberByIdOrThrow(Long.parseLong(user.getUsername()));
         Color color = colorService.getColorByIdOrThrow(request.colorId());
         Period period = Period.of(request.period().startDate(), request.period().endDate(),
                                   request.period().actualEndDate());
