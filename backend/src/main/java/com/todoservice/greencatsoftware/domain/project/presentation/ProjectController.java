@@ -1,6 +1,7 @@
 package com.todoservice.greencatsoftware.domain.project.presentation;
 
 import com.todoservice.greencatsoftware.common.baseResponse.BaseResponse;
+import com.todoservice.greencatsoftware.config.security.principal.CustomUser;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectDetailResponse;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectCreateRequest;
 import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
@@ -10,6 +11,7 @@ import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectS
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,9 +44,10 @@ public class ProjectController {
     }
 
     @PostMapping("")
-    public BaseResponse<Project> createProject(@Valid @RequestBody ProjectCreateRequest newProjectDTO) {
-        log.info("[PROJECT_CREATE] incoming body: {}", newProjectDTO);
-        return new BaseResponse<>(projectService.createProject(newProjectDTO));
+    public BaseResponse<Project> createProject(
+            @AuthenticationPrincipal CustomUser user,
+            @Valid @RequestBody ProjectCreateRequest newProjectDTO) {
+        return new BaseResponse<>(projectService.createProject(user, newProjectDTO));
     }
 
     @PatchMapping("/{id}/field")
