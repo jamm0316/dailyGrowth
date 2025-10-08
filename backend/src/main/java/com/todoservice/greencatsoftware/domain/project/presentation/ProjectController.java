@@ -9,10 +9,12 @@ import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectF
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectSummaryResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/project")
 @RequiredArgsConstructor
@@ -41,6 +43,7 @@ public class ProjectController {
 
     @PostMapping("")
     public BaseResponse<Project> createProject(@Valid @RequestBody ProjectCreateRequest newProjectDTO) {
+        log.info("[PROJECT_CREATE] incoming body: {}", newProjectDTO);
         return new BaseResponse<>(projectService.createProject(newProjectDTO));
     }
 
