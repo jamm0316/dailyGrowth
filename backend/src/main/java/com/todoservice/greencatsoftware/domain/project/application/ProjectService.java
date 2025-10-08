@@ -58,7 +58,12 @@ public class ProjectService {
 
     @Transactional
     public Project createProject(ProjectCreateRequest newProjectDTO) {
-        return projectRepository.save(projectFactory.createProject(newProjectDTO));
+        log.info("[PROJECT_CREATE] service.enter");
+        Project project = projectFactory.createProject(newProjectDTO);
+        log.info("[PROJECT_CREATE] entity.beforeSave id={}", project.getId());
+        Project save = projectRepository.save(project);
+        log.info("[PROJECT_CREATE] entity.afterSave");
+        return save;
     }
 
     @Transactional
