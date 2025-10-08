@@ -91,4 +91,3 @@ public class JwtAuthenticationFilter  extends OncePerRequestFilter {
         return EXCLUDE_PATHS.contains(request.getRequestURI());
     }
 }
-
