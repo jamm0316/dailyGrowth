@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ProjectRepository {
     List<Project> findAll();
-    List<ProjectSummaryResponse> findProjectSummary();
+    List<ProjectSummaryResponse> findProjectSummary(Long userId);
     Project save(Project project);
     Optional<Project> findById(Long id);
     ProjectDetailResponse findDetailWithProgress(Long id);
