@@ -55,7 +55,7 @@ public class OAuthController {
                 ? "http://localhost:5173"
                 : "https://dailygrowth.shop";
 
-        response.sendRedirect(redirectBaseUrl + "/oauth/callback?provider=" + provider);
+        response.sendRedirect(redirectBaseUrl + "/oauth/callback");
     }
 
     @GetMapping("/me")
