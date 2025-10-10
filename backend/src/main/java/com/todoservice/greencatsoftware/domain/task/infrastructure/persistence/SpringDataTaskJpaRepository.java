@@ -28,9 +28,10 @@ public interface SpringDataTaskJpaRepository extends JpaRepository<Task, Long> {
                 t.project.color.id
                 )
             FROM Task t
-            WHERE t.status <> com.todoservice.greencatsoftware.common.enums.Status.COMPLETED
+            WHERE t.project.member.id = :userId
+              AND t.status <> com.todoservice.greencatsoftware.common.enums.Status.COMPLETED
             """)
-    List<TaskSummaryResponse> summaryListTask();
+    List<TaskSummaryResponse> summaryListTask(@Param("userId") Long userId);
 
     @Query("""
             SELECT new com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskSummaryResponse
@@ -78,7 +79,7 @@ public interface SpringDataTaskJpaRepository extends JpaRepository<Task, Long> {
         public List<Task> findAll() {return jpa.findAll();}
 
         @Override
-        public List<TaskSummaryResponse> summaryListTask() {return jpa.summaryListTask();}
+        public List<TaskSummaryResponse> summaryListTask(Long userId) {return jpa.summaryListTask(userId);}
 
         @Override
         public List<TaskSummaryResponse> todayListTask(LocalDate today) {return jpa.todayListTask(today);}
