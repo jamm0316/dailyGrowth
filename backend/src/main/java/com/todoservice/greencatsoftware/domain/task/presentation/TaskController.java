@@ -34,8 +34,8 @@ public class TaskController {
     }
 
     @GetMapping("/today")
-    public BaseResponse<List<TaskSummaryResponse>> todayListTask() {
-        return new BaseResponse<>(taskService.todayListTask(LocalDate.now()));
+    public BaseResponse<List<TaskSummaryResponse>> todayListTask(@AuthenticationPrincipal User user) {
+        return new BaseResponse<>(taskService.todayListTask(Long.parseLong(user.getUsername()), LocalDate.now()));
     }
 
     @GetMapping("/{id}")
