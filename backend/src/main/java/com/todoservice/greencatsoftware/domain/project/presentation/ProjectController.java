@@ -1,7 +1,6 @@
 package com.todoservice.greencatsoftware.domain.project.presentation;
 
 import com.todoservice.greencatsoftware.common.baseResponse.BaseResponse;
-import com.todoservice.greencatsoftware.config.security.principal.CustomUser;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectDetailResponse;
 import com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectCreateRequest;
 import com.todoservice.greencatsoftware.domain.project.domain.entity.Project;
@@ -35,8 +34,8 @@ public class ProjectController {
     }
 
     @GetMapping("/summary")
-    public BaseResponse<List<ProjectSummaryResponse>> summaryListProject() {
-        return new BaseResponse<>(projectService.summaryListProject());
+    public BaseResponse<List<ProjectSummaryResponse>> summaryListProject(@AuthenticationPrincipal User user) {
+        return new BaseResponse<>(projectService.summaryListProject(Long.parseLong(user.getUsername())));
     }
 
     @GetMapping("/{id}")

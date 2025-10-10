@@ -30,7 +30,6 @@ public class OAuthController {
     public void redirectToProvider(@PathVariable String provider, HttpServletResponse response) throws IOException {
         OAuthService oAuthService = oAuthServices.get(provider.toLowerCase());
         String authUrl = oAuthService.buildAuthorizationUrl(provider);
-        log.info("Redirecting to authUrl: " + authUrl);
         response.sendRedirect(authUrl);
     }
 
@@ -51,7 +50,12 @@ public class OAuthController {
         TokenResponse tokenResponse = authService.login(userInfo, uaHash, ipPrefix);
         CookieUtil.addTokenCookies(response, tokenResponse);
 
-        response.sendRedirect("http://dailygrowth.shop/oauth/callback?provider=" + provider);
+        String serverName = request.getServerName();
+        String redirectBaseUrl = serverName.contains("localhost") || serverName.contains("127.0.0.1")
+                ? "http://localhost:5173"
+                : "https://dailygrowth.shop";
+
+        response.sendRedirect(redirectBaseUrl + "/oauth/callback?provider=" + provider);
     }
 
     @GetMapping("/me")

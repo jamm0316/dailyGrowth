@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface TaskRepository {
     List<Task> findAll();
-    List<TaskSummaryResponse> summaryListTask();
+    List<TaskSummaryResponse> summaryListTask(Long userId);
     List<TaskSummaryResponse> todayListTask(LocalDate today);
     TaskDetailResponse getTaskDetailById(Long id);
     Task save(Task task);

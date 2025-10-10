@@ -10,6 +10,8 @@ import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskFieldUp
 import com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskSummaryResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -27,8 +29,8 @@ public class TaskController {
     }
 
     @GetMapping("/summary")
-    public BaseResponse<List<TaskSummaryResponse>> summaryListTask() {
-        return new BaseResponse<>(taskService.summaryListTask());
+    public BaseResponse<List<TaskSummaryResponse>> summaryListTask(@AuthenticationPrincipal User user) {
+        return new BaseResponse<>(taskService.summaryListTask(Long.parseLong(user.getUsername())));
     }
 
     @GetMapping("/today")
