@@ -48,7 +48,6 @@ public class ProjectController {
     public BaseResponse<Project> createProject(
             @AuthenticationPrincipal User user,
             @Valid @RequestBody ProjectCreateRequest newProjectDTO) {
-        log.info("[PROJECT_CREATE]: projectController.enter userName:{}", user.getUsername());
         return new BaseResponse<>(projectService.createProject(user, newProjectDTO));
     }
 
