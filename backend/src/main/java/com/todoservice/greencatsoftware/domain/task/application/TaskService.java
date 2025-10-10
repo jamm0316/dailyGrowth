@@ -37,8 +37,8 @@ public class TaskService {
         return taskRepository.summaryListTask(userId);
     }
 
-    public List<TaskSummaryResponse> todayListTask(LocalDate today) {
-        return taskRepository.todayListTask(today);
+    public List<TaskSummaryResponse> todayListTask(Long userId, LocalDate today) {
+        return taskRepository.todayListTask(userId, today);
     }
 
     public Task getTaskByIdOrThrow(Long id) {
