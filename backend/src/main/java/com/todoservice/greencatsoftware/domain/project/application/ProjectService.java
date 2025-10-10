@@ -37,7 +37,9 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public List<ProjectSummaryResponse> summaryListProject() {return projectRepository.findProjectSummary();}
+    public List<ProjectSummaryResponse> summaryListProject(Long userId) {
+        return projectRepository.findProjectSummary(userId);
+    }
 
     public Project getProjectByIdOrThrow(Long id) {
         return projectRepository.findById(id)
