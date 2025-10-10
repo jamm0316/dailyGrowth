@@ -83,12 +83,17 @@ public class JwtProvider {
 
     // 토큰에서 userId 추출
     public String getUserIdFromToken(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(Keys.hmacShaKeyFor(
-                        Base64.getDecoder().decode(jwtProperties.getSecretKey())))
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(Keys.hmacShaKeyFor(
+                            Base64.getDecoder().decode(jwtProperties.getSecretKey())))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
+        } catch (ExpiredJwtException e) {
+            //토큰이 만료된 경우 예외에서 Claims를 가져온다.
+            return e.getClaims().getSubject();
+        }
     }
 }

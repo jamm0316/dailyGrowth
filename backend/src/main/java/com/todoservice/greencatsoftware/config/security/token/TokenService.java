@@ -45,7 +45,7 @@ public class TokenService {
         return new TokenResponse(accessToken, refreshToken);
     }
 
-    public String reissueAccessToken(String accessToken, String refreshToken, String uaHashNow, String ipPrefixNow) {
+    public TokenResponse reissueAccessToken(String accessToken, String refreshToken, String uaHashNow, String ipPrefixNow) {
         String userIdFromToken = jwtProvider.getUserIdFromToken(accessToken);
         String deviceId = FingerprintUtil.deviceId(uaHashNow, ipPrefixNow);
         String key = rtKey(userIdFromToken, deviceId);
@@ -54,11 +54,12 @@ public class TokenService {
 
         validateFingerprintAndRt(userIdFromToken, deviceId, refreshToken, uaHashNow, ipPrefixNow, stored);
 
+        String newAccessToken = jwtProvider.generateToken(userIdFromToken);
         String newRefreshToken = UUID.randomUUID().toString();
         redisTemplate.opsForHash().put(key, H_REFRESH_TOKEN, newRefreshToken);
         redisTemplate.opsForHash().put(key, H_LAST_SEEN, String.valueOf(System.currentTimeMillis()));
 
-        return jwtProvider.generateToken(userIdFromToken);
+        return new TokenResponse(newAccessToken, newRefreshToken);
     }
 
     public String rtKey(String userId, String deviceId) {

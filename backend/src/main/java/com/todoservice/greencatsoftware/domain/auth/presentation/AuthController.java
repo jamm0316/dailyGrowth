@@ -32,15 +32,18 @@ public class AuthController {
     }
 
     @PostMapping("/reissue")
-    public BaseResponse<Object> reissue(
-            @CookieValue String accessToken,
-            @CookieValue String refreshToken,
-            HttpServletRequest request) {
+    public BaseResponse<TokenResponse> reissue(
+            @CookieValue("access_token") String accessToken,
+            @CookieValue("refresh_token") String refreshToken,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         String uaHash = FingerprintUtil.uaHash(request.getHeader("User-Agent"));
         String ipPrefix = FingerprintUtil.ipPrefix(FingerprintUtil.extractClientIp(request));
 
-        String newAccessToken = tokenService.reissueAccessToken(accessToken, refreshToken, uaHash, ipPrefix);
-        return new BaseResponse<>(newAccessToken);
+        TokenResponse newTokens = tokenService.reissueAccessToken(accessToken, refreshToken, uaHash, ipPrefix);
+
+        CookieUtil.addRefreshTokenCookies(response, newTokens.getRefreshToken());
+        return new BaseResponse<>(new TokenResponse(newTokens.getAccessToken(), null));
     }
 
     @PostMapping("/logout")

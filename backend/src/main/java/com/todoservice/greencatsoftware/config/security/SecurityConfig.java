@@ -1,5 +1,9 @@
 package com.todoservice.greencatsoftware.config.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.todoservice.greencatsoftware.common.baseResponse.BaseResponse;
+import com.todoservice.greencatsoftware.common.baseResponse.BaseResponseStatus;
+import com.todoservice.greencatsoftware.common.exception.BaseException;
 import com.todoservice.greencatsoftware.config.security.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,9 +24,11 @@ import java.util.Collections;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final ObjectMapper objectMapper;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, ObjectMapper objectMapper) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.objectMapper = objectMapper;
     }
 
     @Bean
@@ -38,7 +44,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
                                 "/api/v1/oauth/login/**",
-                                "/api/v1/oauth/callback/**"
+                                "/api/v1/oauth/callback/**",
+                                "/api/v1/auth/reissue"
                         ).permitAll()
                         .requestMatchers("/api/v1/oauth/me").authenticated()
                         .anyRequest().authenticated()
@@ -48,7 +55,17 @@ public class SecurityConfig {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.setContentType("application/json");
                             response.setCharacterEncoding("UTF-8");
-                            response.getWriter().write("{\"isSuccess\":false, \"code\":401, \"message\":\"인증에 실패하였습니다.\"}");
+
+                            Object exception = request.getAttribute("exception");
+                            BaseResponse<Object> baseResponse;
+
+                            if (exception instanceof BaseException) {
+                                baseResponse = new BaseResponse<>(((BaseException) exception).getStatus());
+                            } else {
+                                baseResponse = new BaseResponse<>(BaseResponseStatus.TOKEN_EXPIRED);
+                            }
+
+                            objectMapper.writeValue(response.getWriter(), baseResponse);
                         })
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
