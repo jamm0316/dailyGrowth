@@ -29,6 +29,11 @@ public class CookieUtil {
         response.addCookie(refreshToken);
     }
 
+    public static void addRefreshTokenCookies(HttpServletResponse response, String refreshTokenValue) {
+        Cookie refreshTokenCookie = createCookies("refresh_token", refreshTokenValue, REFRESH_TOKEN_MAX_AGE_IN_SECONDS);
+        response.addCookie(refreshTokenCookie);
+    }
+
     public static void deleteCookie(HttpServletResponse response, String tokenName) {
         Cookie cookie = new Cookie(tokenName, null);
         cookie.setPath("/");
