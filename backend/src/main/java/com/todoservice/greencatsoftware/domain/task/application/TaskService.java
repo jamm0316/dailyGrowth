@@ -33,8 +33,8 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public List<TaskSummaryResponse> summaryListTask() {
-        return taskRepository.summaryListTask();
+    public List<TaskSummaryResponse> summaryListTask(Long userId) {
+        return taskRepository.summaryListTask(userId);
     }
 
     public List<TaskSummaryResponse> todayListTask(LocalDate today) {
