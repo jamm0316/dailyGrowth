@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -36,10 +37,11 @@ public interface SpringDataProjectJpaRepository extends JpaRepository<Project, L
                 FROM Project p
                     LEFT JOIN p.color c
                     LEFT JOIN Task t ON t.project.id = p.id
+                WHERE p.member.id = :userId   
                 GROUP BY p.id, p.color.id, p.name, p.visibility, p.period.startDate, p.period.endDate
                 ORDER BY p.period.endDate ASC               
                 """)
-    List<ProjectSummaryResponse> findProjectSummary();
+    List<ProjectSummaryResponse> findProjectSummary(@Param("userId") Long userId);
 
     @Query("""
            SELECT new com.todoservice.greencatsoftware.domain.project.presentation.dto.ProjectDetailResponse
@@ -84,7 +86,9 @@ public interface SpringDataProjectJpaRepository extends JpaRepository<Project, L
         public List<Project> findAll() {return jpa.findAll();}
 
         @Override
-        public List<ProjectSummaryResponse> findProjectSummary() {return jpa.findProjectSummary();}
+        public List<ProjectSummaryResponse> findProjectSummary(Long userId) {
+            return jpa.findProjectSummary(userId);
+        }
 
         @Override
         public Project save(Project project) {return jpa.save(project);}
