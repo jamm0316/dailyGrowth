@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface TaskRepository {
     List<Task> findAll();
     List<TaskSummaryResponse> summaryListTask(Long userId);
-    List<TaskSummaryResponse> todayListTask(LocalDate today);
+    List<TaskSummaryResponse> todayListTask(Long userId, LocalDate today);
     TaskDetailResponse getTaskDetailById(Long id);
     Task save(Task task);
     Optional<Task> findById(Long id);

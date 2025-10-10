@@ -45,11 +45,14 @@ public interface SpringDataTaskJpaRepository extends JpaRepository<Task, Long> {
                 t.project.color.id
                 )
             FROM Task t
-            WHERE t.status <> com.todoservice.greencatsoftware.common.enums.Status.COMPLETED
+            WHERE t.project.member.id = :userId
+                AND t.status <> com.todoservice.greencatsoftware.common.enums.Status.COMPLETED
                 AND t.schedule.startDate <= :today
                 AND (t.schedule.dueDate IS NULL OR t.schedule.dueDate >= :today)
             """)
-    List<TaskSummaryResponse> todayListTask(@Param("today") LocalDate today);
+    List<TaskSummaryResponse> todayListTask(
+            @Param("userId") Long userId,
+            @Param("today") LocalDate today);
 
     @Query("""
            SELECT new com.todoservice.greencatsoftware.domain.task.presentation.dto.TaskDetailResponse
@@ -82,7 +85,7 @@ public interface SpringDataTaskJpaRepository extends JpaRepository<Task, Long> {
         public List<TaskSummaryResponse> summaryListTask(Long userId) {return jpa.summaryListTask(userId);}
 
         @Override
-        public List<TaskSummaryResponse> todayListTask(LocalDate today) {return jpa.todayListTask(today);}
+        public List<TaskSummaryResponse> todayListTask(Long userId, LocalDate today) {return jpa.todayListTask(userId, today);}
 
         @Override
         public TaskDetailResponse getTaskDetailById(Long id) {return jpa.getTaskDetailById(id);}
