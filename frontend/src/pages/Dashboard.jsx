@@ -227,7 +227,7 @@ const Dashboard = () => {
         {/* 탭에 따른 동적 콘텐츠 */}
         {renderMainContent()}
 
-        {/* 최근 활동 섹션 */}
+        {/* 최근 활동 섹션 todo: 추후 개발 시 주석 제거
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-gray-800">지난주 회고</h2>
@@ -241,6 +241,7 @@ const Dashboard = () => {
             ))}
           </div>
         </section>
+        */}
       </main>
       <BottomNav
         activeTab={activeTab === 'today' ? 'home' : activeTab}
