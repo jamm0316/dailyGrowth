@@ -10,9 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 public class GreencatsoftwareApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(GreencatsoftwareApplication.class, args);
 	}
-
 }
