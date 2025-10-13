@@ -36,7 +36,7 @@ const ProjectForm = ({ form, onSubmit, loading }) => {
           label="Title"
           value={formData.name}
           onChange={(v) => setField('name', v)}
-          placeholder="UI Design"
+          placeholder="프로젝트의 제목을 입력해주세요"
           error={errors.name}
         />
 
