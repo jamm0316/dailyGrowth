@@ -46,6 +46,7 @@ const LoginPage = () => {
           onLogin={goLogin}
         />
       )}
+      {/* todo: 회원가입 기능 완성 시 open
       {currentScreen == SCREEN.LOGIN && (
         <LoginFormScreen
           currentScreen={currentScreen}
@@ -58,6 +59,7 @@ const LoginPage = () => {
           isLoading={isLoading}
         />
       )}
+      */}
     </div>
   );
 };

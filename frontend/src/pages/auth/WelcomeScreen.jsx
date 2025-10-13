@@ -1,7 +1,6 @@
-import { Sprout, TrendingUp, Target } from "lucide-react";
+import { Sprout, TrendingUp, Target, Sparkles } from "lucide-react";
 
-const WelcomeScreen = ({currentScreen, onNavigate}) => {
-
+const WelcomeScreen = ({ currentScreen, onNavigate }) => {
   const handleScreenTransition = (screen) => {
     onNavigate(screen);
   };
@@ -10,61 +9,98 @@ const WelcomeScreen = ({currentScreen, onNavigate}) => {
     <div
       className={`absolute inset-0 bg-gradient-to-b from-green-50 via-blue-50 to-purple-50 transition-transform duration-500 ${
         currentScreen === 'welcome' ? 'translate-y-0' : '-translate-y-full'
-      }`}>
-      <div className="flex flex-col items-center justify-center min-h-screen px-6">
-        {/* Floating Growth Icons */}
-        <div className="absolute top-20 left-10 animate-bounce">
-          <div className="w-8 h-8 bg-green-200 rounded-full flex items-center justify-center">
-            <Sprout className="w-4 h-4 text-green-600"/>
+      }`}
+    >
+      <div className="flex flex-col items-center justify-center min-h-screen px-6 py-8">
+        {/* Subtle Floating Icons */}
+        <div className="absolute top-20 left-8 animate-bounce opacity-40">
+          <div className="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center">
+            <Sprout className="w-5 h-5 text-green-600" />
           </div>
         </div>
-        <div className="absolute top-32 right-16 animate-pulse">
-          <div className="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center">
-            <TrendingUp className="w-3 h-3 text-blue-600"/>
-          </div>
-        </div>
-        <div className="absolute top-48 right-8 animate-bounce delay-500">
-          <div className="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center">
-            <Target className="w-5 h-5 text-purple-600"/>
+        <div className="absolute top-32 right-12 animate-pulse opacity-40">
+          <div className="w-8 h-8 bg-purple-200 rounded-full flex items-center justify-center">
+            <Target className="w-4 h-4 text-purple-600" />
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="text-center mb-12">
-          <div
-            className="w-24 h-24 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 rounded-full flex items-center justify-center mb-8 mx-auto shadow-2xl animate-pulse">
-            <Sprout className="w-12 h-12 text-white"/>
+        {/* Main Logo */}
+        <div className="mb-6">
+          <div className="relative w-24 h-24 mx-auto">
+            <div className="absolute inset-0 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 rounded-full animate-pulse shadow-2xl" />
+            <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+              <Sprout className="w-10 h-10 text-green-500" />
+            </div>
+            <div className="absolute -top-1 -right-1">
+              <Sparkles className="w-5 h-5 text-yellow-500 animate-pulse" />
+            </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            Daily<span className="text-green-500">Growth</span>
+        </div>
+
+        {/* Brand Name */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2 tracking-tight">
+            Daily<span className="bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 bg-clip-text text-transparent">Growth</span>
           </h1>
-          <p className="text-gray-600 text-lg leading-relaxed">
-            Every day is a new opportunity<br/>
-            to grow and achieve your goals
+          <p className="text-sm text-gray-500 font-medium">매일 성장하는 나</p>
+        </div>
+
+        {/* Main Hook Message - 압축 */}
+        <div className="text-center mb-8 max-w-xs">
+          <p className="text-xl font-semibold text-gray-800 mb-2 leading-snug">
+            작은 습관이<br />
+            <span className="bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">
+              큰 변화
+            </span>를 만듭니다
+          </p>
+          <p className="text-sm text-gray-600">
+            매일 1%씩, 1년 후 <strong className="text-green-600">37배</strong> 성장
           </p>
         </div>
 
-        {/* Animated Growth Visualization */}
-        <div className="flex items-end space-x-2 mb-16">
-          {[1, 2, 3, 4, 5].map((item) => (
-            <div
-              key={item}
-              className={`bg-gradient-to-t from-green-400 to-green-300 rounded-t-lg animate-pulse`}
-              style={{
-                width: '20px',
-                height: `${item * 20}px`,
-                animationDelay: `${item * 200}ms`
-              }}
-            />
+        {/* Growth Visualization - 작게 */}
+        <div className="flex items-end space-x-2 mb-8">
+          {[25, 35, 50, 65, 80].map((height, index) => (
+            <div key={index} className="relative">
+              <div
+                className="bg-gradient-to-t from-green-500 via-blue-400 to-purple-400 rounded-md shadow-sm"
+                style={{
+                  width: '14px',
+                  height: `${height}px`,
+                }}
+              />
+              {index === 4 && (
+                <TrendingUp className="absolute -top-6 left-1/2 -translate-x-1/2 w-4 h-4 text-green-500 animate-bounce" />
+              )}
+            </div>
           ))}
         </div>
 
+        {/* Feature Pills - 간소화 */}
+        <div className="flex gap-2 mb-8">
+          <div className="px-3 py-1.5 bg-white/70 backdrop-blur-sm rounded-full text-xs text-gray-700 shadow-sm">
+            📊 목표 달성
+          </div>
+          <div className="px-3 py-1.5 bg-white/70 backdrop-blur-sm rounded-full text-xs text-gray-700 shadow-sm">
+            ✅ 습관 형성
+          </div>
+          <div className="px-3 py-1.5 bg-white/70 backdrop-blur-sm rounded-full text-xs text-gray-700 shadow-sm">
+            📈 성장 기록
+          </div>
+        </div>
+
+        {/* CTA Button */}
         <button
           onClick={() => handleScreenTransition('auth')}
-          className="w-64 py-4 bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+          className="w-full max-w-xs py-3.5 bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 text-white text-base font-semibold rounded-2xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 mb-3"
         >
-          함께 성장 시작하기 🚀
+          지금 바로 시작하기
         </button>
+
+        {/* Trust Elements */}
+        <p className="text-xs text-gray-500">
+          무료 • 30초 가입 • 언제든 탈퇴 가능
+        </p>
       </div>
     </div>
   );
