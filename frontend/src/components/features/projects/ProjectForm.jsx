@@ -53,7 +53,7 @@ const ProjectForm = ({ form, onSubmit, loading }) => {
           <textarea
             value={formData.description}
             onChange={(e) => setField('description', e.target.value)}
-            placeholder="Lorem Ipsum is simply dummy text..."
+            placeholder="프로젝트에 대한 설명을 입력하세요"
             className="w-full text-gray-700 resize-none border-none outline-none bg-transparent h-24 text-lg leading-relaxed placeholder-gray-400"
           />
         </div>
