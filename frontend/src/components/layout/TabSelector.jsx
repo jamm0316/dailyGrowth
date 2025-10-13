@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TabSelector = ({ activeTab, onTabChange }) => {
+const TabSelector = ({ activeTab, onTabChange, todayCount = 0 }) => {
   const tabs = [
     { id: 'today', label: '오늘 할일', isActive: true },
     { id: 'projects', label: '프로젝트', isActive: false },
@@ -21,7 +21,9 @@ const TabSelector = ({ activeTab, onTabChange }) => {
         >
           <div className="flex items-center justify-center space-x-2">
             <span>{tab.label}</span>
-            {tab.isActive && (
+
+            {/* 🔴 오늘 할일이 1개 이상일 때만 배지 표시 */}
+            {tab.id === "today" && todayCount > 0 && (
               <span className="w-2 h-2 bg-red-500 rounded-full"></span>
             )}
           </div>

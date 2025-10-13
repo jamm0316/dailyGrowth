@@ -220,7 +220,9 @@ const Dashboard = () => {
         <TabSelector activeTab={activeTab} onTabChange={(tab) => {
           setActiveTab(tab);
           if (tab !== 'projects') clearSearch();
-        }}/>
+        }}
+        todayCount={todayData?.length ?? 0}
+        />
 
         {/* 탭에 따른 동적 콘텐츠 */}
         {renderMainContent()}
@@ -241,9 +243,9 @@ const Dashboard = () => {
         </section>
       </main>
       <BottomNav
-      activeTab={activeTab === 'today' ? 'home' : activeTab}
-      onTabChange={handleBottomTabChange}
-      onAddTask={handleBottomAddTask}
+        activeTab={activeTab === 'today' ? 'home' : activeTab}
+        onTabChange={handleBottomTabChange}
+        onAddTask={handleBottomAddTask}
       />
     </div>
   );
