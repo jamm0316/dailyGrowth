@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { oauthApi } from "/src/api/oauth/oauthApi.js";
 
 export function useAuthCheck() {
-  const [state, setState] = useState({ loading: true, ok: false });
+  const [state, setState] = useState({ loading: true, ok: false, user: null });
 
   useEffect(() => {
     const justLoggedIn = sessionStorage.getItem("justLoggedIn");
@@ -14,11 +14,11 @@ export function useAuthCheck() {
       let canceled = false;
       (async () => {
         try {
-          await oauthApi.me();
-          if (!canceled) setState({ loading: false, ok: true });
+          const profile = await oauthApi.me();
+          if (!canceled) setState({ loading: false, user: profile.result, ok: true });
         } catch(e) {
           console.log("Auth check failed", e)
-          if (!canceled) setState({ loading: false, ok: false });
+          if (!canceled) setState({ loading: false, user: null, ok: false });
         }
       })();
       return () => {

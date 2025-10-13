@@ -1,7 +1,11 @@
 import React from 'react';
 import {Menu, User} from 'lucide-react';
+import {useAuthCheck} from "/src/hooks/oauth/useAuthCheck.jsx";
 
 const Header = () => {
+  const {user, loading} = useAuthCheck();
+
+  const displayName = user?.name ?? "Guest";
   return (
     <header className="px-6 pt-12 pb-6 bg-white">
       <div className="flex items-center justify-between mb-6">
@@ -12,8 +16,10 @@ const Header = () => {
       </div>
 
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-1">Hello, John!</h1>
-        <p className="text-gray-500">Have a nice day!</p>
+        <h1 className="text-3xl font-bold text-gray-800 mb-1">
+          {loading ? "Hello..." : `반가워요, ${displayName}님!`}
+        </h1>
+        <p className="text-gray-500">오늘도 함께 성장해 볼까요?</p>
       </div>
     </header>
   );
