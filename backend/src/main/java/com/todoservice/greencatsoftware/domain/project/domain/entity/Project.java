@@ -23,7 +23,7 @@ public class Project extends SuperEntity {
     private Long id;
 
     @NotNull(message = "color_id는 필수 입니다.")
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "color_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_PROJECT_COLOR")
