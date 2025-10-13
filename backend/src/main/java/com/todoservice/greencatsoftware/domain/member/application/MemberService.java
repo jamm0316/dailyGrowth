@@ -22,6 +22,6 @@ public class MemberService {
 
     public Member getMemberByIdOrThrow(Long id) {
         return memberRepository.getMemberByIdOrThrow(id)
-                .orElseThrow(() -> new BaseException(BaseResponseStatus.MISSING_START_TIME_VALUE));
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.NOT_FOUND_MEMBER));
     }
 }
