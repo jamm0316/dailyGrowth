@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
@@ -65,11 +64,11 @@ public class OAuthController {
     }
 
     @GetMapping("/me")
-    public BaseResponse<UserProfileResponse> me(Authentication authentication) {
-        if (authentication == null) {
+    public BaseResponse<UserProfileResponse> me(@AuthenticationPrincipal User user) {
+        if (user == null) {
             return new BaseResponse<>(BaseResponseStatus.ACCESS_TOKEN_IS_NULL);
         }
-        Member memberByIdOrThrow = memberService.getMemberByIdOrThrow(Long.parseLong(authentication.getName()));
+        Member memberByIdOrThrow = memberService.getMemberByIdOrThrow(Long.parseLong(user.getUsername()));
         return new BaseResponse<>(UserProfileResponse.from(memberByIdOrThrow));
     }
 }
