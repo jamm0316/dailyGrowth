@@ -37,19 +37,18 @@ DailyGrowth는 “매일의 작은 성장이 모여 큰 변화를 만든다”�
 ## 트러블 슈팅
 | Category         | Topic                                                                         | Detailed Wiki Link |
 | ---------------- | ----------------------------------------------------------------------------- | ------------------ |
-| **Security**     | Refresh Token 재발급 보안 강화 아키텍처 설계                                               | (채워야 함: Wiki 링크)   |
-|                  | └ JWT 단일 구조 취약점 진단 및 개선                                                       | (채워야 함: 상세 링크)     |
-|                  | └ Redis 기반 상태관리 (Stateful Refresh Token) 적용                                   | (채워야 함)            |
-|                  | └ IP / User-Agent 검증 절차 강화 및 쿠키 보안 옵션 적용                                      | (채워야 함)            |
-| **Architecture** | 인증/인가 아키텍처 (Access / Refresh 흐름) 설계도                                          | (채워야 함: 다이어그램)     |
-|                  | └ Stateless vs Stateful 토큰 설계 비교                                              | (채워야 함)            |
-|                  | └ TokenService 책임 분리 (OAuthService → AuthService → TokenService → CookieUtil) | (채워야 함)            |
-| **Infra**        | 데이터베이스 부하 및 레플리케이션 문제                                                         | (채워야 함: 메인 문서로 이동) |
-|                  | └ MySQL healthcheck / 인덱스 / 쿼리 튜닝                                             | (채워야 함)            |
-|                  | └ Docker / EC2 배포 관련 리소스(디스크, 메모리) 이슈                                         | (채워야 함)            |
-| **Concurrency**  | 동시성 문제 (좌석 선점/자원 경합 → 예: 할일 동시 수정 충돌)                                         | (채워야 함: 메인 문서로 이동) |
-|                  | └ 낙관적 락(ObjectOptimisticLockingFailureException) 처리                           | (채워야 함)            |
-|                  | └ 트랜잭션 경계와 재시도 전략(비동기 작업 포함)                                                  | (채워야 함)            |
+| **Security**     | Refresh Token 재발급 보안 강화 아키텍처 설계 | 메인 문서로 이동 |
+|                  | └ JWT 단일 구조 취약점 진단 및 개선 | 자세히 보기 |
+|                  | └ Redis 기반 상태관리 (Stateful Refresh Token) 적용 | 자세히 보기 |
+|                  | └ IP / User-Agent 검증 절차 강화 및 쿠키 보안 옵션 적용 | 자세히 보기 |
+| **Architecture** | 인증/인가 아키텍처 (Access / Refresh 흐름) 설계도 | 메인 문서로 이동 |
+|                  | └ Stateless vs Stateful 토큰 설계 비교 | 자세히 보기 |
+|                  | └ TokenService 책임 분리 (OAuthService → AuthService → TokenService → CookieUtil) | 자세히 보기 |
+| **Infra**        | 데이터베이스 부하 및 레플리케이션 문제 | 메인 문서로 이동 |
+|                  | └ Docker / EC2 배포 관련 리소스(디스크, 메모리) 이슈 | 자세히 보기 |
+| **Concurrency**  | 동시성 문제 (좌석 선점/자원 경합 → 예: 할일 동시 수정 충돌) | 메인 문서로 이동 |
+|                  | └ 낙관적 락(ObjectOptimisticLockingFailureException) 처리 | 자세히 보기 |
+|                  | └ 트랜잭션 경계와 재시도 전략(비동기 작업 포함) | 자세히 보기 |
 
 
 ## 시스템 아키텍처 (그림으로 간편화 할것)
