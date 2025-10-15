@@ -1,4 +1,6 @@
-# 🌱 DailyGrowth – 프로젝트 & 할 일 관리 서비스
+# 🌱 DailyGrowth – 프로젝트 & 할 일 관리 서비스 
+> ⚠️ readme 수정중으로 일부 이동되지 않는 링크가 있습니다.
+
 DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한
 프로젝트·할 일(Task) 통합 관리 서비스입니다.
 
@@ -58,7 +60,7 @@ DailyGrowth는 “매일의 작은 성장이 모여 큰 변화를 만든다”�
 | Backend | Java 17 + Spring Boot 3.x | 메인 애플리케이션 |
 | Database | MySQL | RDB |
 | Cache | Redis | RefreshToken 상태 관리 및 캐싱 |
-| Security | JWT + Cookie (HttpOnly, Secure, SameSite=Strict) | 인증/인가 |
+| Security | Spring Security + OAuth 2.0 + JWT | 인증/인가 |
 | Infra | Docker, GitHub Actions, AWS EC2 | 컨테이너 기반 배포 및 CI/CD |
 | Docs | Springdoc (Swagger UI) | API 문서 자동화 |
 | Frontend | React + Vite + TailwindCSS | SPA 기반 UI |
