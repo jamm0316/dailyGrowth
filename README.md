@@ -46,6 +46,7 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한 
 ## 트러블 슈팅
 | Category         | Topic                                                                         | Detailed Wiki Link |
 | ---------------- | ----------------------------------------------------------------------------- | ------------------ |
+| **Concurrency**  | 동시성 문제 (로그인 & 회원 조회의 Race Condition) | [메인 문서로 이동](https://github.com/jamm0316/dailyGrowth/wiki/%5BConcurrency%5D-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-(%EB%A1%9C%EA%B7%B8%EC%9D%B8-&-%ED%9A%8C%EC%9B%90-%EC%A1%B0%ED%9A%8C%EC%9D%98-Race-Condition)) |
 | **Security**     | Refresh Token 재발급 보안 강화 아키텍처 설계 | 메인 문서로 이동 |
 |                  | └ JWT 단일 구조 취약점 진단 및 개선 | 자세히 보기 |
 |                  | └ Redis 기반 상태관리 (Stateful Refresh Token) 적용 | 자세히 보기 |
@@ -55,9 +56,6 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한 
 |                  | └ TokenService 책임 분리 (OAuthService → AuthService → TokenService → CookieUtil) | 자세히 보기 |
 | **Infra**        | 데이터베이스 부하 및 레플리케이션 문제 | 메인 문서로 이동 |
 |                  | └ Docker / EC2 배포 관련 리소스(디스크, 메모리) 이슈 | 자세히 보기 |
-| **Concurrency**  | 동시성 문제 (좌석 선점/자원 경합 → 예: 할일 동시 수정 충돌) | 메인 문서로 이동 |
-|                  | └ 낙관적 락(ObjectOptimisticLockingFailureException) 처리 | 자세히 보기 |
-|                  | └ 트랜잭션 경계와 재시도 전략(비동기 작업 포함) | 자세히 보기 |
 <br>
 <br>
 
