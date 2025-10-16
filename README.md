@@ -8,14 +8,14 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한
 | 번호 | 섹션       | 설명                  |
 | -- | -------- | ------------------- |
 | 1  | [프로젝트 개요](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)  | 서비스 소개 및 개발 목적      |
-| 2  | [주요 기능](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)    | 핵심 기능 및 특징          |
-| 3  | [트러블 슈팅](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)   | 개발 중 발생한 문제점과 해결 과정 |
-| 4  | [시스템 아키텍처](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) | 전체 시스템 구조 및 기술 스택   |
-| 5  | [프로젝트 플로우](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94) | 사용자 흐름 및 주요 시나리오    |
-| 6  | [ERD](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)      | 엔티티 관계 다이어그램        |
-| 7  | 프로젝트 구조      | 단위 테스트 및 검증 구조      |
-| 8  | [실행 방법](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)    | 로컬 환경 실행 가이드        |
-| 9  | [실제 서비스](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B0%9C%EC%9A%94)   | 배포 및 운영 정보          |
+| 2  | [주요 기능](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5)    | 핵심 기능 및 특징          |
+| 3  | [트러블 슈팅](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85)   | 개발 중 발생한 문제점과 해결 과정 |
+| 4  | [시스템 아키텍처](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%EC%8B%9C%EC%8A%A4%ED%85%9C-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EA%B7%B8%EB%A6%BC%EC%9C%BC%EB%A1%9C-%EA%B0%84%ED%8E%B8%ED%99%94-%ED%95%A0%EA%B2%83) | 전체 시스템 구조 및 기술 스택   |
+| 5  | [프로젝트 플로우](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%ED%94%8C%EB%A1%9C%EC%9A%B0) | 사용자 흐름 및 주요 시나리오    |
+| 6  | [ERD](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#erd)      | 엔티티 관계 다이어그램        |
+| 7  | [프로젝트 구조](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B5%AC%EC%A1%B0)      | 단위 테스트 및 검증 구조      |
+| 8  | [실행 방법](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%EC%8B%A4%ED%96%89-%EB%B0%A9%EB%B2%95)    | 로컬 환경 실행 가이드        |
+| 9  | [실제 서비스](https://github.com/jamm0316/dailyGrowth?tab=readme-ov-file#%EC%8B%A4%EC%A0%9C-%EC%84%9C%EB%B9%84%EC%8A%A4)   | 배포 및 운영 정보          |
 
 ## 프로젝트 개요
 ### 개발 목적
