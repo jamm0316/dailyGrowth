@@ -47,10 +47,8 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한 
 | Category         | Topic                                                                         | Detailed Wiki Link |
 | ---------------- | ----------------------------------------------------------------------------- | ------------------ |
 | **Concurrency**  | 동시성 문제 (로그인 & 회원 조회의 Race Condition) | [메인 문서로 이동](https://github.com/jamm0316/dailyGrowth/wiki/%5BConcurrency%5D-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-(%EB%A1%9C%EA%B7%B8%EC%9D%B8-&-%ED%9A%8C%EC%9B%90-%EC%A1%B0%ED%9A%8C%EC%9D%98-Race-Condition)) |
-| **Security**     | Refresh Token 재발급 보안 강화 아키텍처 설계 | 메인 문서로 이동 |
-|                  | └ JWT 단일 구조 취약점 진단 및 개선 | 자세히 보기 |
-|                  | └ Redis 기반 상태관리 (Stateful Refresh Token) 적용 | 자세히 보기 |
-|                  | └ IP / User-Agent 검증 절차 강화 및 쿠키 보안 옵션 적용 | 자세히 보기 |
+| **Security**     | Refresh Token 재발급 보안 강화 아키텍처 설계 | [메인 문서로 이동](https://github.com/jamm0316/dailyGrowth/wiki/%5BSecurity%5D-Refresh-Token-%ED%83%88%EC%B7%A8-%EB%B3%B4%EC%95%88-%EB%8C%80%EC%9D%91(UA---IP-%EC%A7%80%EB%AC%B8-%EB%B0%94%EC%9D%B8%EB%94%A9).md) |
+|                  | └ IP / User-Agent 검증 절차 강화 및 쿠키 보안 옵션 적용 | [자세히 보기](https://github.com/jamm0316/dailyGrowth/wiki/%5BSecurity%5D-Refresh-Token-%ED%83%88%EC%B7%A8-%EB%B3%B4%EC%95%88-%EB%8C%80%EC%9D%91(UA---IP-%EC%A7%80%EB%AC%B8-%EB%B0%94%EC%9D%B8%EB%94%A9).md) |
 | **Architecture** | 인증/인가 아키텍처 (Access / Refresh 흐름) 설계도 | 메인 문서로 이동 |
 |                  | └ Stateless vs Stateful 토큰 설계 비교 | 자세히 보기 |
 |                  | └ TokenService 책임 분리 (OAuthService → AuthService → TokenService → CookieUtil) | 자세히 보기 |
