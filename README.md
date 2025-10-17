@@ -78,12 +78,6 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한 
 
 ## 프로젝트 구조
 <pre>
-├── config
-│   ├── security
-│   │   ├── jwt
-│   │   ├── principal
-│   │   ├── service
-│   │   └── token
 ├── domain
 │   ├── auth
 │   │   ├── domain
