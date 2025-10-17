@@ -49,11 +49,7 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한 
 | **Concurrency**  | 동시성 문제 (로그인 & 회원 조회의 Race Condition) | [메인 문서로 이동](https://github.com/jamm0316/dailyGrowth/wiki/%5BConcurrency%5D-%EB%8F%99%EC%8B%9C%EC%84%B1-%EB%AC%B8%EC%A0%9C-(%EB%A1%9C%EA%B7%B8%EC%9D%B8-&-%ED%9A%8C%EC%9B%90-%EC%A1%B0%ED%9A%8C%EC%9D%98-Race-Condition)) |
 | **Security**     | Refresh Token 재발급 보안 강화 아키텍처 설계 | [메인 문서로 이동](https://github.com/jamm0316/dailyGrowth/wiki/%5BSecurity%5D-Refresh-Token-%ED%83%88%EC%B7%A8-%EB%B3%B4%EC%95%88-%EB%8C%80%EC%9D%91(UA---IP-%EC%A7%80%EB%AC%B8-%EB%B0%94%EC%9D%B8%EB%94%A9).md) |
 |                  | └ IP / User-Agent 검증 절차 강화 및 쿠키 보안 옵션 적용 | [자세히 보기](https://github.com/jamm0316/dailyGrowth/wiki/%5BSecurity%5D-Refresh-Token-%ED%83%88%EC%B7%A8-%EB%B3%B4%EC%95%88-%EB%8C%80%EC%9D%91(UA---IP-%EC%A7%80%EB%AC%B8-%EB%B0%94%EC%9D%B8%EB%94%A9).md) |
-| **Architecture** | 인증/인가 아키텍처 (Access / Refresh 흐름) 설계도 | 메인 문서로 이동 |
-|                  | └ Stateless vs Stateful 토큰 설계 비교 | 자세히 보기 |
-|                  | └ TokenService 책임 분리 (OAuthService → AuthService → TokenService → CookieUtil) | 자세히 보기 |
-| **Infra**        | 데이터베이스 부하 및 레플리케이션 문제 | 메인 문서로 이동 |
-|                  | └ Docker / EC2 배포 관련 리소스(디스크, 메모리) 이슈 | 자세히 보기 |
+| **Architecture** | OAuth 모듈 리팩토링(헥사고날 아키텍처 적용) | [메인 문서로 이동](https://github.com/jamm0316/dailyGrowth/wiki/%5BArchitecture%5D-OAuth-%EB%AA%A8%EB%93%88-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81(%ED%97%A5%EC%82%AC%EA%B3%A0%EB%82%A0-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98-%EC%A0%81%EC%9A%A9)) |
 <br>
 <br>
 
