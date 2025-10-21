@@ -46,6 +46,11 @@ public class Project extends SuperEntity {
     @Column(columnDefinition = "varchar(30) default 'PLANNING'")
     private Status status;
 
+    @NotNull(message = "Project Type은 필수입니다..")
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(30) default 'PERSONAL'")
+    private ProjectType projectType;
+
     @Embedded
     private Period period;
 
@@ -64,17 +69,19 @@ public class Project extends SuperEntity {
                    Member member,
                    String name,
                    Status status,
+                   ProjectType projectType,
                    Period period,
                    String description,
                    Boolean isPublic,
                    Visibility visibility) {
 
-        validateDomainInvariants(color, member, name, status, isPublic, visibility);
+        validateDomainInvariants(color, member, name, status, projectType, isPublic, visibility);
 
         this.color = color;
         this.member = member;
         this.name = name.trim();
         this.status = status;
+        this.projectType = projectType;
         this.period = period;
         this.description = description != null ? description.trim() : null;
         this.isPublic = isPublic;
@@ -82,11 +89,13 @@ public class Project extends SuperEntity {
     }
 
     private void validateDomainInvariants(Color color,
-                                         Member member,
-                                         String name,
-                                         Status status,
-                                         Boolean isPublic,
-                                         Visibility visibility) {
+                                          Member member,
+                                          String name,
+                                          Status status,
+                                          ProjectType projectType,
+                                          Boolean isPublic,
+                                          Visibility visibility) {
+
         if (color == null) {
             throw new BaseException(BaseResponseStatus.MISSING_COLOR_FOR_PROJECT);
         }
@@ -107,6 +116,10 @@ public class Project extends SuperEntity {
             throw new BaseException(BaseResponseStatus.MISSING_STATUS_FOR_PROJECT);
         }
 
+        if (projectType == null) {
+            throw new BaseException(BaseResponseStatus.MISSING_PROJECT_TYPE_FOR_PROJECT);
+        }
+
         if (isPublic == null) {
             throw new BaseException(BaseResponseStatus.MISSING_IS_PUBLIC_FOR_PROJECT);
         }
@@ -116,14 +129,14 @@ public class Project extends SuperEntity {
         }
     }
 
-    public static Project create(Color color, Member member, String name, Status status,
+    public static Project create(Color color, Member member, String name, Status status, ProjectType projectType,
                                  String description, Boolean isPublic, Visibility visibility) {
-        return new Project(color, member, name, status, null, description, isPublic, visibility);
+        return new Project(color, member, name, status, projectType, null, description, isPublic, visibility);
     }
 
-    public static Project createWithPeriod(Color color, Member member, String name, Status status,
+    public static Project createWithPeriod(Color color, Member member, String name, Status status, ProjectType projectType,
                                            Period period, String description, Boolean isPublic, Visibility visibility) {
-        return new Project(color, member, name, status, period, description, isPublic, visibility);
+        return new Project(color, member, name, status, projectType, period, description, isPublic, visibility);
     }
 
     public void changeColor(Color color) {
@@ -150,6 +163,13 @@ public class Project extends SuperEntity {
             throw new BaseException(BaseResponseStatus.MISSING_STATUS_FOR_PROJECT);
         }
         this.status = status;
+    }
+
+    public void changeProjectType(ProjectType projectType) {
+        if (projectType == null) {
+            throw new BaseException(BaseResponseStatus.MISSING_PROJECT_TYPE_FOR_PROJECT);
+        }
+        this.projectType = projectType;
     }
 
     public void changePeriod(Period period) {

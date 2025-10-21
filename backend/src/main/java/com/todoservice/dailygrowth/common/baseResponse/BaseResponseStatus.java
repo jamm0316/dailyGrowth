@@ -54,7 +54,17 @@ public enum BaseResponseStatus {
     MISSING_IS_PUBLIC_FOR_PROJECT(false, 6008, "Project 공개 여부는 필수 입니다."),
     MISSING_VISIBILITY_FOR_PROJECT(false, 6009, "Project 공개 범위는 필수 입니다."),
     MISSING_MEMBER_FOR_PROJECT(false, 6010, "Project의 Member는 필수입니다."),
-
+    MISSING_PROJECT_TYPE_FOR_PROJECT(false, 6011, "Project의 Project Type은 필수입니다."),
+    MISSING_PROJECT_FOR_CHALLENGE(false, 6500, "Challenge의 Project는 필수입니다."),
+    MISSING_MEMBER_FOR_CHALLENGE(false, 6501, "Challenge의 Member는 필수입니다."),
+    INVALID_DATE_CHALLENGE(false, 6502, "Challenge의 joinedDate는 project 시작 전일 수 없습니다."),
+    NOT_A_CHALLENGE_PROJECT(false, 6503, "Challenge의 Project Type은 반드시 CHALLENGE 여야합니다."),
+    CHALLENGE_PERIOD_UNDEFINED(false, 6504, "Challenge의 Project.period는 필수입니다."),
+    CHALLENGE_NOT_START(false, 6505, "Challenge가 시작되지 않았습니다."),
+    CHALLENGE_ENDED(false, 6506, "Challenge가 기간이 끝났습니다."),
+    CHALLENGE_COMPLETED(false, 6507, "이미 완료된 프로젝트 입니다."),
+    CHALLENGE_CANNOT_BE_PRIVATE(false, 6508, "Challenge는 개인 프로젝트이면 안됩니다."),
+    CHALLENGE_CANNOT_BE_NO_PUBLIC(false, 6509, "Challenge는 비공개이면 안됩니다."),
 
     /**
      * 7000: Task 오류

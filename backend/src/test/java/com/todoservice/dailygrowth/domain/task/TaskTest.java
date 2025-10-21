@@ -10,6 +10,7 @@ import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
+import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import com.todoservice.dailygrowth.domain.task.domain.entity.Task;
 import com.todoservice.dailygrowth.domain.task.domain.vo.Schedule;
@@ -37,13 +38,14 @@ public class TaskTest {
 
     private Project projectWithPeriod() {
         return Project.createWithPeriod(color("RED", "#FF0000"), member, "프로젝트", Status.PLANNING,
+                ProjectType.PERSONAL,
                 Period.of(LocalDate.of(2005, 1, 1), LocalDate.of(2005, 12, 31), LocalDate.of(2005, 12, 31)),
                 "description", true, Visibility.PUBLIC);
     }
 
     private Project project() {
         return Project.create(color("RED", "#FF0000"), member,"프로젝트", Status.PLANNING,
-                "description", true, Visibility.PUBLIC);
+                ProjectType.PERSONAL, "description", true, Visibility.PUBLIC);
     }
 
     @Test
@@ -134,7 +136,7 @@ public class TaskTest {
                 "알고리즘 공부", "백준123", DayLabel.MORNING, Status.PLANNING);
 
         Project newProject = Project.create(color("BLUE", "#0000FF"), member,"새로운 프로젝트",
-                Status.COMPLETED, "new description", true, Visibility.TEAM);
+                Status.COMPLETED, ProjectType.PERSONAL, "new description", true, Visibility.TEAM);
 
         Color newColor = Color.create("GREEN", "#00FF00");
 

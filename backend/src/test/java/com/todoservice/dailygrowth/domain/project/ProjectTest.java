@@ -8,6 +8,7 @@ import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
+import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,7 @@ public class ProjectTest {
                 member,
                 "   나의 프로젝트    ",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 "   잘해보자구~",
                 true,
                 Visibility.PUBLIC);
@@ -46,6 +48,7 @@ public class ProjectTest {
         //then
         assertThat(project.getName()).isEqualTo("나의 프로젝트");
         assertThat(project.getStatus()).isEqualTo(Status.PLANNING);
+        assertThat(project.getProjectType()).isEqualTo(ProjectType.PERSONAL);
         assertThat(project.getDescription()).isEqualTo("잘해보자구~");
         assertThat(project.getIsPublic()).isTrue();
         assertThat(project.getVisibility()).isEqualTo(Visibility.PUBLIC);
@@ -68,6 +71,7 @@ public class ProjectTest {
                 member,
                  "   나의 프로젝트    ",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 period,
                 "   잘해보자구~",
                 true,
@@ -76,6 +80,7 @@ public class ProjectTest {
         //then
         assertThat(project.getName()).isEqualTo("나의 프로젝트");
         assertThat(project.getStatus()).isEqualTo(Status.PLANNING);
+        assertThat(project.getProjectType()).isEqualTo(ProjectType.PERSONAL);
         assertThat(project.getPeriod().startDate()).isEqualTo(startDate);
         assertThat(project.getPeriod().endDate()).isEqualTo(endDate);
         assertThat(project.getPeriod().actualEndDate()).isNull();
@@ -95,33 +100,39 @@ public class ProjectTest {
         //then
         //color null
         assertThatThrownBy(() -> Project.create(
-                null, member,"name", Status.PLANNING, "description", true, Visibility.PUBLIC
+                null, member,"name", Status.PLANNING, ProjectType.PERSONAL,
+                "description", true, Visibility.PUBLIC
         )).isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_COLOR_FOR_PROJECT.getMessage());
 
         //name empty
         assertThatThrownBy(() -> Project.create(
-                color, member,"", Status.PLANNING, "description", true, Visibility.PUBLIC
+                color, member,"", Status.PLANNING, ProjectType.PERSONAL,
+                "description", true, Visibility.PUBLIC
         )).isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_TITLE_FOR_PROJECT.getMessage());
 
         //name toLong
         String longName = "a".repeat(101);
         assertThatThrownBy(() -> Project.create(
-                color, member,longName, Status.PLANNING, "description", true, Visibility.PUBLIC
+                color, member,longName, Status.PLANNING, ProjectType.PERSONAL,
+                "description", true, Visibility.PUBLIC
         )).isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.TITLE_EXCEEDS_LIMIT_FOR_PROJECT.getMessage());
 
         //status null
         assertThatThrownBy(() -> Project.create(
-                color, member,"name", null, "description", true, Visibility.PUBLIC
+                color, member,"name", null, ProjectType.PERSONAL,
+                "description", true, Visibility.PUBLIC
         )).isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_STATUS_FOR_PROJECT.getMessage());
 
         //isPublic null
         assertThatThrownBy(() -> Project.create(
-                color, member,"name", Status.PLANNING, "description", null, Visibility.PUBLIC
+                color, member,"name", Status.PLANNING, ProjectType.PERSONAL,
+                "description", null, Visibility.PUBLIC
         )).isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_IS_PUBLIC_FOR_PROJECT.getMessage());
 
         //visibility null
         assertThatThrownBy(() -> Project.create(
-                color, member,"name", Status.PLANNING, "description", true, null
+                color, member,"name", Status.PLANNING, ProjectType.PERSONAL,
+                "description", true, null
         )).isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_VISIBILITY_FOR_PROJECT.getMessage());
     }
 
@@ -139,6 +150,7 @@ public class ProjectTest {
                 member,
                 "   나의 프로젝트    ",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 period,
                 "   잘해보자구~",
                 true,
@@ -176,6 +188,7 @@ public class ProjectTest {
                 member,
                 "name",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 "description",
                 true,
                 Visibility.PUBLIC);
