@@ -8,6 +8,7 @@ import com.todoservice.dailygrowth.domain.color.infrastructure.persistence.Sprin
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.member.infrastructure.persistence.SpringDataMemberJpaRepository;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
+import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import com.todoservice.dailygrowth.domain.project.infrastructure.persistence.SpringDataProjectJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -63,6 +64,7 @@ public class SpringDataProjectRepositoryTest {
                 member,
                 "프로젝트A",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 "프로젝트A 입니다.",
                 true,
                 Visibility.PRIVATE);
@@ -78,6 +80,7 @@ public class SpringDataProjectRepositoryTest {
         assertThat(found.getColor().getHexCode()).isEqualTo("#FF0000");
         assertThat(found.getName()).isEqualTo("프로젝트A");
         assertThat(found.getStatus()).isEqualTo(Status.PLANNING);
+        assertThat(found.getProjectType()).isEqualTo(ProjectType.PERSONAL);
         assertThat(found.getDescription()).isEqualTo("프로젝트A 입니다.");
         assertThat(found.getIsPublic()).isTrue();
         assertThat(found.getVisibility()).isEqualTo(Visibility.PRIVATE);
@@ -97,6 +100,7 @@ public class SpringDataProjectRepositoryTest {
                 member,
                 "프로젝트A",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 period,
                 "프로젝트A 입니다.",
                 true,
@@ -116,6 +120,7 @@ public class SpringDataProjectRepositoryTest {
         found.changeName("   새로운 프로젝트   ");
         found.changePeriod(Period.of(newStartDate, newEndDate, newActualEndDate));
         found.changeStatus(Status.COMPLETED);
+        found.changeProjectType(ProjectType.CHALLENGE);
         found.changeDescription(" 변경 된 프로젝트입니다.   ");
         found.changeIsPublic(false);
         found.changeVisibility(Visibility.TEAM);
@@ -128,6 +133,7 @@ public class SpringDataProjectRepositoryTest {
         assertThat(found.getPeriod().endDate()).isEqualTo(LocalDate.of(2025, 12, 30));
         assertThat(found.getPeriod().actualEndDate()).isEqualTo(LocalDate.of(2025, 12, 29));
         assertThat(found.getStatus()).isEqualTo(Status.COMPLETED);
+        assertThat(found.getProjectType()).isEqualTo(ProjectType.CHALLENGE);
         assertThat(found.getDescription()).isEqualTo("변경 된 프로젝트입니다.");
         assertThat(found.getIsPublic()).isFalse();
         assertThat(found.getVisibility()).isEqualTo(Visibility.TEAM);
@@ -147,6 +153,7 @@ public class SpringDataProjectRepositoryTest {
                 member,
                 "삭제용",
                 Status.PLANNING,
+                ProjectType.PERSONAL,
                 period,
                 "삭제할 프로젝트",
                 true,
