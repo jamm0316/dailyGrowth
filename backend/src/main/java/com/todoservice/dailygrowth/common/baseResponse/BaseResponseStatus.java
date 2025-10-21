@@ -63,6 +63,8 @@ public enum BaseResponseStatus {
     CHALLENGE_NOT_START(false, 6505, "Challenge가 시작되지 않았습니다."),
     CHALLENGE_ENDED(false, 6506, "Challenge가 기간이 끝났습니다."),
     CHALLENGE_COMPLETED(false, 6507, "이미 완료된 프로젝트 입니다."),
+    CHALLENGE_CANNOT_BE_PRIVATE(false, 6508, "Challenge는 개인 프로젝트이면 안됩니다."),
+    CHALLENGE_CANNOT_BE_NO_PUBLIC(false, 6509, "Challenge는 비공개이면 안됩니다."),
 
     /**
      * 7000: Task 오류
