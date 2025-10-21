@@ -54,6 +54,7 @@ public enum BaseResponseStatus {
     MISSING_IS_PUBLIC_FOR_PROJECT(false, 6008, "Project 공개 여부는 필수 입니다."),
     MISSING_VISIBILITY_FOR_PROJECT(false, 6009, "Project 공개 범위는 필수 입니다."),
     MISSING_MEMBER_FOR_PROJECT(false, 6010, "Project의 Member는 필수입니다."),
+    MISSING_PROJECT_TYPE_FOR_PROJECT(false, 6011, "Project의 Project Type은 필수입니다."),
     MISSING_PROJECT_FOR_CHALLENGE(false, 6500, "Challenge의 Project는 필수입니다."),
     MISSING_MEMBER_FOR_CHALLENGE(false, 6501, "Challenge의 Member는 필수입니다."),
     INVALID_DATE_CHALLENGE(false, 6502, "Challenge의 joinedDate는 project 시작 전일 수 없습니다."),
