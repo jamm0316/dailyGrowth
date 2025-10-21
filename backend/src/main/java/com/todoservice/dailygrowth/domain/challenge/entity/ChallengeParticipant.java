@@ -2,6 +2,7 @@ package com.todoservice.dailygrowth.domain.challenge.entity;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.enums.Status;
+import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.common.superEntity.SuperEntity;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
@@ -91,9 +92,19 @@ public class ChallengeParticipant extends SuperEntity {
         if (project.getStatus() == Status.COMPLETED) {
             throw new BaseException(BaseResponseStatus.CHALLENGE_COMPLETED);
         }
+
+        //7. 개인 프로젝트인지 확인
+        if (project.getVisibility() == Visibility.PRIVATE) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_CANNOT_BE_PRIVATE);
+        }
+
+        //8. 비공개 프로젝트인지 확인
+        if (!project.getIsPublic()) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_CANNOT_BE_NO_PUBLIC);
+        }
     }
 
-    public ChallengeParticipant create(Project project, Member member) {
+    static public ChallengeParticipant create(Project project, Member member) {
         return new ChallengeParticipant(project, member, LocalDateTime.now());
     }
 }
