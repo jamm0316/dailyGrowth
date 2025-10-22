@@ -9,7 +9,8 @@ import com.todoservice.dailygrowth.domain.challenge.entity.ChallengeParticipant;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
-import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
+import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
+import com.todoservice.dailygrowth.domain.project.domain.vo.ChallengeDetails;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,18 +39,19 @@ public class ChallengeParticipantTest {
         LocalDate endDate = LocalDate.now().plusDays(1);
         Color color = Color.create("RED", "FF0000");
         Period period = Period.of(startDate, endDate, null);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(3);
 
         //when
-        project = Project.createWithPeriod(
+        project = Project.createChallenge(
                 color,
                 member,
                 "   나의 프로젝트    ",
                 Status.PLANNING,
-                ProjectType.CHALLENGE,
                 period,
                 "   잘해보자구~",
                 true,
-                Visibility.PUBLIC);
+                Visibility.PUBLIC,
+                challengeDetails);
 
         //when
         challengeParticipant =
@@ -111,20 +113,19 @@ public class ChallengeParticipantTest {
                 "null",
                 "testName");
         Color color = Color.create("RED", "FF0000");
+        ChallengeDetails challengeDetails = ChallengeDetails.of(3);
 
         //when
-        project = Project.create(
+        assertThatThrownBy(() -> Project.createChallenge(
                 color,
                 member,
                 "   나의 프로젝트    ",
                 Status.PLANNING,
-                ProjectType.CHALLENGE,
+                null,
                 "   잘해보자구~",
                 true,
-                Visibility.PUBLIC);
-
-        //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
+                Visibility.PUBLIC,
+                challengeDetails))
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_PERIOD_UNDEFINED.getMessage());
     }
 

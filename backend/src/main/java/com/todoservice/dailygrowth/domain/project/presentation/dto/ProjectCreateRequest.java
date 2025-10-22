@@ -2,7 +2,6 @@ package com.todoservice.dailygrowth.domain.project.presentation.dto;
 
 import com.todoservice.dailygrowth.common.enums.Status;
 import com.todoservice.dailygrowth.common.enums.Visibility;
-import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,10 +17,6 @@ public record ProjectCreateRequest(
 
         @NotNull(message = "상태값은 필수 입니다.")
         Status status,  //프로젝트 상태
-
-        @NotNull(message = "프로젝트 타입은 필수 입니다.")
-        ProjectType projectType,
-
         Period period,
         String description,  //설명
 

@@ -10,7 +10,6 @@ import com.todoservice.dailygrowth.domain.color.infrastructure.persistence.Sprin
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.member.infrastructure.persistence.SpringDataMemberJpaRepository;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
-import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
 import com.todoservice.dailygrowth.domain.project.infrastructure.persistence.SpringDataProjectJpaRepository;
 import com.todoservice.dailygrowth.domain.task.domain.entity.Task;
 import com.todoservice.dailygrowth.domain.task.domain.vo.Schedule;
@@ -72,7 +71,6 @@ public class SpringDataTaskRepositoryTest {
                 member,
                 "프로젝트B",
                 Status.PLANNING,
-                ProjectType.PERSONAL,
                 "프로젝트 입니다",
                 true,
                 Visibility.PRIVATE);
@@ -163,7 +161,6 @@ public class SpringDataTaskRepositoryTest {
                         member,
                         "새로운 프로젝트",
                         Status.PLANNING,
-                        ProjectType.PERSONAL,
                         "새로운 프로젝트 입니다",
                         true,
                         Visibility.TEAM));

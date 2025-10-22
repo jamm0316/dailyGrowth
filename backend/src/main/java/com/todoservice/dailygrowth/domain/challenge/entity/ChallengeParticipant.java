@@ -7,7 +7,7 @@ import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.common.superEntity.SuperEntity;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
-import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
+import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;

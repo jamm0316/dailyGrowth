@@ -25,10 +25,10 @@ public class ProjectFactory {
                 request.period().actualEndDate());
 
         return (period.isNull())
-                ? Project.create(color, member, request.name(), request.status(), request.projectType(),
+                ? Project.create(color, member, request.name(), request.status(),
                 request.description(), request.isPublic(), request.visibility())
 
-                : Project.createWithPeriod(color, member, request.name(), request.status(), request.projectType(),
+                : Project.createWithPeriod(color, member, request.name(), request.status(),
                 period, request.description(), request.isPublic(), request.visibility());
     }
 }

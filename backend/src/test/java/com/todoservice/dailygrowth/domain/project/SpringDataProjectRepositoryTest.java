@@ -8,7 +8,7 @@ import com.todoservice.dailygrowth.domain.color.infrastructure.persistence.Sprin
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.member.infrastructure.persistence.SpringDataMemberJpaRepository;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
-import com.todoservice.dailygrowth.domain.project.domain.entity.ProjectType;
+import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import com.todoservice.dailygrowth.domain.project.infrastructure.persistence.SpringDataProjectJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -64,7 +64,6 @@ public class SpringDataProjectRepositoryTest {
                 member,
                 "프로젝트A",
                 Status.PLANNING,
-                ProjectType.PERSONAL,
                 "프로젝트A 입니다.",
                 true,
                 Visibility.PRIVATE);
@@ -100,7 +99,6 @@ public class SpringDataProjectRepositoryTest {
                 member,
                 "프로젝트A",
                 Status.PLANNING,
-                ProjectType.PERSONAL,
                 period,
                 "프로젝트A 입니다.",
                 true,
@@ -153,7 +151,6 @@ public class SpringDataProjectRepositoryTest {
                 member,
                 "삭제용",
                 Status.PLANNING,
-                ProjectType.PERSONAL,
                 period,
                 "삭제할 프로젝트",
                 true,
