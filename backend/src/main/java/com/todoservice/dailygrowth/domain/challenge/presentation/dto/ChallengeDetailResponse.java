@@ -1,7 +1,6 @@
 package com.todoservice.dailygrowth.domain.challenge.presentation.dto;
 
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.domain.project.domain.vo.ChallengeDetails;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import jakarta.validation.constraints.NotBlank;
