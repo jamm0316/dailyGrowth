@@ -5,7 +5,7 @@ import com.todoservice.dailygrowth.common.enums.Status;
 import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
-import com.todoservice.dailygrowth.domain.challenge.entity.ChallengeParticipant;
+import com.todoservice.dailygrowth.domain.challenge.domain.entity.ChallengeParticipant;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
