@@ -1,4 +1,4 @@
-package com.todoservice.dailygrowth.domain.challenge.entity;
+package com.todoservice.dailygrowth.domain.challenge.domain.entity;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.enums.Status;

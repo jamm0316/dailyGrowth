@@ -48,7 +48,7 @@ public class Project extends SuperEntity {
     @Column(columnDefinition = "varchar(30) default 'PLANNING'")
     private Status status;
 
-    @NotNull(message = "Project Type은 필수입니다..")
+    @NotNull(message = "Project Type은 필수입니다.")
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "varchar(30) default 'PERSONAL'")
     private ProjectType projectType;
