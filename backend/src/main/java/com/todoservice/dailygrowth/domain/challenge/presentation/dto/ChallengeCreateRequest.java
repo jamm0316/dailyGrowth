@@ -6,12 +6,13 @@ import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.domain.project.domain.vo.ChallengeDetails;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
+import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
 @Builder
-public record ChallengeCreateRequest (
+public record ChallengeCreateRequest(
         @NotNull(message = "colorId는 필수 입니다.")
         Long colorId,  //프로젝트 컬러
 
@@ -20,6 +21,9 @@ public record ChallengeCreateRequest (
 
         @NotNull(message = "상태값은 필수 입니다.")
         Status status,  //프로젝트 상태
+
+        @NotNull(message = "Project Type은 필수입니다.")
+        ProjectType projectType,
 
         @NotNull(message = "기간은 필수 입니다.")
         Period period,
