@@ -20,7 +20,6 @@ public interface SpringDataProjectJpaRepository extends JpaRepository<Project, L
                     p.id,
                     p.color.id,
                     p.name,
-                    p.visibility,
                     p.period.startDate,
                     p.period.endDate,
                     CASE 
@@ -37,7 +36,7 @@ public interface SpringDataProjectJpaRepository extends JpaRepository<Project, L
                     LEFT JOIN p.color c
                     LEFT JOIN Task t ON t.project.id = p.id
                 WHERE p.member.id = :userId   
-                GROUP BY p.id, p.color.id, p.name, p.visibility, p.period.startDate, p.period.endDate
+                GROUP BY p.id, p.color.id, p.name, p.period.startDate, p.period.endDate
                 ORDER BY p.period.endDate ASC               
                 """)
     List<ProjectSummaryResponse> findProjectSummary(@Param("userId") Long userId);
@@ -50,8 +49,6 @@ public interface SpringDataProjectJpaRepository extends JpaRepository<Project, L
                 p.status,
                 p.period,
                 p.description,
-                p.isPublic,
-                p.visibility,
                 CASE 
                     WHEN COUNT(t) = 0 THEN 0.0
                     ELSE SUM(
@@ -65,7 +62,7 @@ public interface SpringDataProjectJpaRepository extends JpaRepository<Project, L
            FROM Project p
                LEFT JOIN Task t ON t.project.id = p.id
            WHERE p.id = :projectId
-           GROUP BY p.color.id, p.name, p.status, p.period, p.description, p.isPublic, p.visibility
+           GROUP BY p.color.id, p.name, p.status, p.period, p.description
            """)
     ProjectDetailResponse findDetailWithProgress(@Param("projectId") Long projectId);
 
