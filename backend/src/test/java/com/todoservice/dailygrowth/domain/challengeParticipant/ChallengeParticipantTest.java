@@ -1,6 +1,7 @@
 package com.todoservice.dailygrowth.domain.challengeParticipant;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
+import com.todoservice.dailygrowth.common.enums.ChallengeCategory;
 import com.todoservice.dailygrowth.common.enums.Status;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
@@ -38,7 +39,7 @@ public class ChallengeParticipantTest {
         LocalDate endDate = LocalDate.now().plusDays(1);
         Color color = Color.create("RED", "FF0000");
         Period period = Period.of(startDate, endDate, null);
-        ChallengeDetails challengeDetails = ChallengeDetails.of(3);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(3, ChallengeCategory.WORKOUT);
 
         //when
         challenge = Challenge.create(
@@ -67,6 +68,10 @@ public class ChallengeParticipantTest {
         assertThat(challengeParticipant.getChallenge().getDescription()).isEqualTo("잘해보자구~");
         assertThat(challengeParticipant.getChallenge().getColor().getHexCode()).isEqualTo("FF0000");
         assertThat(challengeParticipant.getChallenge().getColor().getName()).isEqualTo("RED");
+        assertThat(challengeParticipant.getChallenge().getChallengeDetails().challengeCategory()).isEqualTo(ChallengeCategory.WORKOUT);
+        assertThat(challengeParticipant.getChallenge().getChallengeDetails().participantCount()).isEqualTo(1);
+        assertThat(challengeParticipant.getChallenge().getChallengeDetails().targetParticipants()).isEqualTo(3);
+
     }
 
     @Test
@@ -94,7 +99,7 @@ public class ChallengeParticipantTest {
                 "null",
                 "testName");
         Color color = Color.create("RED", "FF0000");
-        ChallengeDetails challengeDetails = ChallengeDetails.of(3);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(3, ChallengeCategory.WORKOUT);
 
         //when
         assertThatThrownBy(() -> Challenge.create(
@@ -155,7 +160,7 @@ public class ChallengeParticipantTest {
         LocalDate endDate = LocalDate.now().plusDays(1);
         Color color = Color.create("RED", "FF0000");
         Period period = Period.of(startDate, endDate, null);
-        ChallengeDetails challengeDetails = ChallengeDetails.of(1);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(1, ChallengeCategory.WORKOUT);
 
         //when
         Challenge newChallenge = Challenge.create(
@@ -179,7 +184,7 @@ public class ChallengeParticipantTest {
         LocalDate endDate = LocalDate.now().plusDays(1);
         Color color = Color.create("RED", "FF0000");
         Period period = Period.of(startDate, endDate, null);
-        ChallengeDetails challengeDetails = ChallengeDetails.of(1);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(1, ChallengeCategory.WORKOUT);
 
         //when
         Challenge newChallenge = Challenge.create(
