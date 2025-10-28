@@ -71,8 +71,7 @@ DailyGrowth는 개인의 목표 달성과 팀 협업 효율을 높이기 위한 
 <br>
 
 ## ERD
-
-<img width="2410" height="968" alt="image" src="https://github.com/user-attachments/assets/f635b56f-833c-45f8-824c-e58ee8a73e04" />
+<img width="2450" height="1924" alt="image" src="https://github.com/user-attachments/assets/de50e6b8-4c3b-41c6-90ff-3c340b5d4f4a" />
 
 <br>
 <br>
