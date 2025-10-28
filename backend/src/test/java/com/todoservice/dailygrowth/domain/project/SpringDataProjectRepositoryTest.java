@@ -1,14 +1,13 @@
 package com.todoservice.dailygrowth.domain.project;
 
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.color.infrastructure.persistence.SpringDataColorRepository;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.member.infrastructure.persistence.SpringDataMemberJpaRepository;
+import com.todoservice.dailygrowth.domain.project.domain.entity.PersonalProject;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import com.todoservice.dailygrowth.domain.project.infrastructure.persistence.SpringDataProjectJpaRepository;
 import jakarta.persistence.EntityManager;
@@ -59,14 +58,13 @@ public class SpringDataProjectRepositoryTest {
     public void save_and_find() throws Exception {
         //given
         Color color = colorRepository.saveAndFlush(Color.create("RED", "#FF0000"));
-        Project project = Project.create(
+        PersonalProject project = PersonalProject.create(
                 color,
                 member,
                 "프로젝트A",
                 Status.PLANNING,
-                "프로젝트A 입니다.",
-                true,
-                Visibility.PRIVATE);
+                "프로젝트A 입니다."
+                );
 
         //when
         Project saved = projectRepository.saveAndFlush(project);
@@ -79,10 +77,7 @@ public class SpringDataProjectRepositoryTest {
         assertThat(found.getColor().getHexCode()).isEqualTo("#FF0000");
         assertThat(found.getName()).isEqualTo("프로젝트A");
         assertThat(found.getStatus()).isEqualTo(Status.PLANNING);
-        assertThat(found.getProjectType()).isEqualTo(ProjectType.PERSONAL);
         assertThat(found.getDescription()).isEqualTo("프로젝트A 입니다.");
-        assertThat(found.getIsPublic()).isTrue();
-        assertThat(found.getVisibility()).isEqualTo(Visibility.PRIVATE);
     }
 
     @Test
@@ -94,15 +89,13 @@ public class SpringDataProjectRepositoryTest {
         LocalDate endDate = LocalDate.of(2025, 12, 31);
         LocalDate actualEndDate = LocalDate.of(2025, 12, 31);
         Period period = Period.of(startDate, endDate, actualEndDate);
-        Project project = Project.createWithPeriod(
+        PersonalProject project = PersonalProject.createWithPeriod(
                 color,
                 member,
                 "프로젝트A",
                 Status.PLANNING,
                 period,
-                "프로젝트A 입니다.",
-                true,
-                Visibility.PRIVATE
+                "프로젝트A 입니다."
         );
 
         Project saved = projectRepository.saveAndFlush(project);
@@ -118,10 +111,7 @@ public class SpringDataProjectRepositoryTest {
         found.changeName("   새로운 프로젝트   ");
         found.changePeriod(Period.of(newStartDate, newEndDate, newActualEndDate));
         found.changeStatus(Status.COMPLETED);
-        found.changeProjectType(ProjectType.CHALLENGE);
         found.changeDescription(" 변경 된 프로젝트입니다.   ");
-        found.changeIsPublic(false);
-        found.changeVisibility(Visibility.TEAM);
 
         //then
         assertThat(found.getColor().getName()).isEqualTo("BLUE");
@@ -131,10 +121,7 @@ public class SpringDataProjectRepositoryTest {
         assertThat(found.getPeriod().endDate()).isEqualTo(LocalDate.of(2025, 12, 30));
         assertThat(found.getPeriod().actualEndDate()).isEqualTo(LocalDate.of(2025, 12, 29));
         assertThat(found.getStatus()).isEqualTo(Status.COMPLETED);
-        assertThat(found.getProjectType()).isEqualTo(ProjectType.CHALLENGE);
         assertThat(found.getDescription()).isEqualTo("변경 된 프로젝트입니다.");
-        assertThat(found.getIsPublic()).isFalse();
-        assertThat(found.getVisibility()).isEqualTo(Visibility.TEAM);
     }
 
     @Test
@@ -146,15 +133,13 @@ public class SpringDataProjectRepositoryTest {
         LocalDate endDate = LocalDate.of(2025, 12, 31);
         LocalDate actualEndDate = LocalDate.of(2025, 12, 31);
         Period period = Period.of(startDate, endDate, actualEndDate);
-        Project project = Project.createWithPeriod(
+        PersonalProject project = PersonalProject.createWithPeriod(
                 color,
                 member,
                 "삭제용",
                 Status.PLANNING,
                 period,
-                "삭제할 프로젝트",
-                true,
-                Visibility.PRIVATE
+                "삭제할 프로젝트"
         );
         Project saved = projectRepository.saveAndFlush(project);
 
