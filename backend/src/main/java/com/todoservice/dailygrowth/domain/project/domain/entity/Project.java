@@ -2,14 +2,11 @@ package com.todoservice.dailygrowth.domain.project.domain.entity;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.common.superEntity.SuperEntity;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ChallengeDetails;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -19,7 +16,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Project extends SuperEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "project_type")
+public abstract class Project extends SuperEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -48,62 +47,32 @@ public class Project extends SuperEntity {
     @Column(columnDefinition = "varchar(30) default 'PLANNING'")
     private Status status;
 
-    @NotNull(message = "Project Type은 필수입니다.")
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(30) default 'PERSONAL'")
-    private ProjectType projectType;
-
     @Embedded
     private Period period;
 
     private String description;
 
-    @NotNull(message = "공개 여부는 필수입니다.")
-    @Column(columnDefinition = "boolean default true")
-    private Boolean isPublic;
-
-    @NotNull(message = "공개 범위는 필수입니다.")
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "varchar(20) default 'PRIVATE'")
-    private Visibility visibility;
-
-    @Embedded
-    private ChallengeDetails challengeDetails;
-
     public Project(Color color,
                    Member member,
                    String name,
                    Status status,
-                   ProjectType projectType,
                    Period period,
-                   String description,
-                   Boolean isPublic,
-                   Visibility visibility,
-                   ChallengeDetails challengeDetails) {
+                   String description) {
 
-        validateDomainInvariants(color, member, name, status, projectType, period, isPublic, visibility, challengeDetails);
+        validateDomainInvariants(color, member, name, status);
 
         this.color = color;
         this.member = member;
         this.name = name.trim();
         this.status = status;
-        this.projectType = projectType;
         this.period = period;
         this.description = description != null ? description.trim() : null;
-        this.isPublic = isPublic;
-        this.visibility = visibility;
-        this.challengeDetails = challengeDetails;
     }
 
     private void validateDomainInvariants(Color color,
                                           Member member,
                                           String name,
-                                          Status status,
-                                          ProjectType projectType,
-                                          Period period,
-                                          Boolean isPublic,
-                                          Visibility visibility,
-                                          ChallengeDetails challengeDetails) {
+                                          Status status) {
 
         if (color == null) {
             throw new BaseException(BaseResponseStatus.MISSING_COLOR_FOR_PROJECT);
@@ -124,47 +93,13 @@ public class Project extends SuperEntity {
         if (status == null) {
             throw new BaseException(BaseResponseStatus.MISSING_STATUS_FOR_PROJECT);
         }
-
-        if (projectType == null) {
-            throw new BaseException(BaseResponseStatus.MISSING_PROJECT_TYPE_FOR_PROJECT);
-        }
-
-        if (isPublic == null) {
-            throw new BaseException(BaseResponseStatus.MISSING_IS_PUBLIC_FOR_PROJECT);
-        }
-
-        if (visibility == null) {
-            throw new BaseException(BaseResponseStatus.MISSING_VISIBILITY_FOR_PROJECT);
-        }
-
-        if (projectType == ProjectType.CHALLENGE) {
-            if (period == null || period.isNull()) {
-                throw new BaseException(BaseResponseStatus.CHALLENGE_PERIOD_UNDEFINED);
-            }
-
-            if (challengeDetails == null || challengeDetails.isNull()) {
-                throw new BaseException(BaseResponseStatus.CHALLENGE_DETAILS_NOT_ALLOWED_FOR_NON_CHALLENGE);
-            }
-        }
     }
 
-    public static Project create(Color color, Member member, String name, Status status,
-                                 String description, Boolean isPublic, Visibility visibility) {
-        return new Project(color, member, name, status, ProjectType.PERSONAL, null, description, isPublic, visibility, null);
-    }
-
-    public static Project createWithPeriod(Color color, Member member, String name, Status status,
-                                           Period period, String description, Boolean isPublic, Visibility visibility) {
-        return new Project(color, member, name, status, ProjectType.PERSONAL, period, description, isPublic, visibility, null);
-    }
-
-    public static Project createChallenge(Color color, Member member, String name, Status status,
-                                              Period period, String description, Boolean isPublic, Visibility visibility,
-                                              ChallengeDetails challengeDetails) {
-        return new Project(color, member, name, status, ProjectType.CHALLENGE, period, description, isPublic, visibility, challengeDetails);
-    }
-
+    /**
+     * ========== 공통 변경 메서드 ==========
+     **/
     public void changeColor(Color color) {
+
         if (color == null) {
             throw new BaseException(BaseResponseStatus.MISSING_COLOR_FOR_PROJECT);
         }
@@ -190,13 +125,6 @@ public class Project extends SuperEntity {
         this.status = status;
     }
 
-    public void changeProjectType(ProjectType projectType) {
-        if (projectType == null) {
-            throw new BaseException(BaseResponseStatus.MISSING_PROJECT_TYPE_FOR_PROJECT);
-        }
-        this.projectType = projectType;
-    }
-
     public void changePeriod(Period period) {
         if (period.isNull()) {
             this.period = Period.noPeriod();
@@ -211,27 +139,5 @@ public class Project extends SuperEntity {
         } else {
             this.description = null;
         }
-    }
-
-    public void changeIsPublic(Boolean isPublic) {
-        if (isPublic == null) {
-            throw new BaseException(BaseResponseStatus.MISSING_IS_PUBLIC_FOR_PROJECT);
-        }
-        this.isPublic = isPublic;
-    }
-
-    public void changeVisibility(Visibility visibility) {
-        if (visibility == null) {
-            throw new BaseException(BaseResponseStatus.MISSING_VISIBILITY_FOR_PROJECT);
-        }
-        this.visibility = visibility;
-    }
-
-    public void increaseParticipant() {
-        this.challengeDetails = this.challengeDetails.increaseParticipant();
-    }
-
-    public void decreaseParticipant() {
-        this.challengeDetails = this.challengeDetails.decreaseParticipant();
     }
 }

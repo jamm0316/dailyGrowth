@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.domain.color.application.ColorService;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
@@ -109,18 +108,6 @@ public class ProjectService {
             case "colorId" -> {
                 Color color = colorService.getColorByIdOrThrow((Long) request.value());
                 project.changeColor(color);
-            }
-            case "isPublic" -> project.changeIsPublic((Boolean) request.value());
-            case "visibility" -> {
-                if (request.value().equals("PRIVATE")) {
-                    project.changeVisibility(Visibility.PRIVATE);
-                }
-                if (request.value().equals("PUBLIC")) {
-                    project.changeVisibility(Visibility.PUBLIC);
-                }
-                if (request.value().equals("TEAM")) {
-                    project.changeVisibility(Visibility.TEAM);
-                }
             }
         }
     }

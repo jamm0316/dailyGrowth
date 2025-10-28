@@ -1,7 +1,10 @@
 package com.todoservice.dailygrowth.domain.challenge.application;
 
+import com.todoservice.dailygrowth.domain.challenge.domain.entity.Challenge;
 import com.todoservice.dailygrowth.domain.challenge.presentation.dto.ChallengeCreateRequest;
 import com.todoservice.dailygrowth.domain.color.application.ColorService;
+import com.todoservice.dailygrowth.domain.member.application.MemberService;
+import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
 import com.todoservice.dailygrowth.domain.project.domain.port.ProjectRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +20,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChallengeService {
     private final ChallengeFactory challengeFactory;
     private final ProjectRepository projectRepository;
-    private final ColorService colorService;
+    private final MemberService memberService;
 
     @Transactional
     public Project createChallenge(User user, ChallengeCreateRequest newChallengeDTO) {
-        return projectRepository.save(challengeFactory.createChallenge(user, newChallengeDTO));
+        Challenge challenge = challengeFactory.createChallenge(user, newChallengeDTO);
+
+        long memberId = Long.parseLong(user.getUsername());
+        Member member = memberService.getMemberByIdOrThrow(memberId);
+        challenge.addParticipant(member);
+
+        return projectRepository.save(challenge);
     }
 }

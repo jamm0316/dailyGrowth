@@ -1,4 +1,4 @@
-package com.todoservice.dailygrowth.domain.project.domain.vo;
+package com.todoservice.dailygrowth.domain.challenge.domain.vo;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.exception.BaseException;

@@ -3,12 +3,12 @@ package com.todoservice.dailygrowth.domain.task;
 import com.todoservice.dailygrowth.common.enums.DayLabel;
 import com.todoservice.dailygrowth.common.enums.Priority;
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.color.infrastructure.persistence.SpringDataColorRepository;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
 import com.todoservice.dailygrowth.domain.member.infrastructure.persistence.SpringDataMemberJpaRepository;
+import com.todoservice.dailygrowth.domain.project.domain.entity.PersonalProject;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
 import com.todoservice.dailygrowth.domain.project.infrastructure.persistence.SpringDataProjectJpaRepository;
 import com.todoservice.dailygrowth.domain.task.domain.entity.Task;
@@ -66,14 +66,13 @@ public class SpringDataTaskRepositoryTest {
     }
 
     private Project saveProject(Color color) {
-        Project project = Project.create(
+        PersonalProject project = PersonalProject.create(
                 color,
                 member,
                 "프로젝트B",
                 Status.PLANNING,
-                "프로젝트 입니다",
-                true,
-                Visibility.PRIVATE);
+                "프로젝트 입니다"
+                );
         return projectRepository.saveAndFlush(project);
     }
 
@@ -155,15 +154,14 @@ public class SpringDataTaskRepositoryTest {
                 "새로운 할 일", null, DayLabel.MORNING, Status.PLANNING));
 
         Color newColor = saveColor("BLUE", "#0000FF");
-        Project newProject = projectRepository.saveAndFlush(
-                Project.create(
+        PersonalProject newProject = projectRepository.saveAndFlush(
+                PersonalProject.create(
                         newColor,
                         member,
                         "새로운 프로젝트",
                         Status.PLANNING,
-                        "새로운 프로젝트 입니다",
-                        true,
-                        Visibility.TEAM));
+                        "새로운 프로젝트 입니다"
+                        ));
 
         //when
         task.changeProject(newProject);

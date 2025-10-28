@@ -2,15 +2,13 @@ package com.todoservice.dailygrowth.domain.challengeParticipant;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
+import com.todoservice.dailygrowth.domain.challenge.domain.entity.Challenge;
 import com.todoservice.dailygrowth.domain.challenge.domain.entity.ChallengeParticipant;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
-import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ChallengeDetails;
+import com.todoservice.dailygrowth.domain.challenge.domain.vo.ChallengeDetails;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,11 +16,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChallengeParticipantTest {
     private Member member;
-    private Project project;
+    private Challenge challenge;
     private ChallengeParticipant challengeParticipant;
 
     @BeforeEach
@@ -42,37 +41,32 @@ public class ChallengeParticipantTest {
         ChallengeDetails challengeDetails = ChallengeDetails.of(3);
 
         //when
-        project = Project.createChallenge(
+        challenge = Challenge.create(
                 color,
                 member,
                 "   나의 프로젝트    ",
                 Status.PLANNING,
                 period,
                 "   잘해보자구~",
-                true,
-                Visibility.PUBLIC,
                 challengeDetails);
 
         //when
         challengeParticipant =
-                ChallengeParticipant.create(project, member);
+                ChallengeParticipant.create(challenge, member);
     }
 
     @Test
     @DisplayName("정상 생성")
     public void create_ok () throws Exception {
         //then
-        assertThat(challengeParticipant.getProject().getName()).isEqualTo("나의 프로젝트");
-        assertThat(challengeParticipant.getProject().getStatus()).isEqualTo(Status.PLANNING);
-        assertThat(challengeParticipant.getProject().getProjectType()).isEqualTo(ProjectType.CHALLENGE);
-        assertThat(challengeParticipant.getProject().getPeriod().startDate()).isEqualTo(LocalDate.now().minusDays(1));
-        assertThat(challengeParticipant.getProject().getPeriod().endDate()).isEqualTo(LocalDate.now().plusDays(1));
-        assertThat(challengeParticipant.getProject().getPeriod().actualEndDate()).isNull();
-        assertThat(challengeParticipant.getProject().getDescription()).isEqualTo("잘해보자구~");
-        assertThat(challengeParticipant.getProject().getIsPublic()).isTrue();
-        assertThat(challengeParticipant.getProject().getVisibility()).isEqualTo(Visibility.PUBLIC);
-        assertThat(challengeParticipant.getProject().getColor().getHexCode()).isEqualTo("FF0000");
-        assertThat(challengeParticipant.getProject().getColor().getName()).isEqualTo("RED");
+        assertThat(challengeParticipant.getChallenge().getName()).isEqualTo("나의 프로젝트");
+        assertThat(challengeParticipant.getChallenge().getStatus()).isEqualTo(Status.PLANNING);
+        assertThat(challengeParticipant.getChallenge().getPeriod().startDate()).isEqualTo(LocalDate.now().minusDays(1));
+        assertThat(challengeParticipant.getChallenge().getPeriod().endDate()).isEqualTo(LocalDate.now().plusDays(1));
+        assertThat(challengeParticipant.getChallenge().getPeriod().actualEndDate()).isNull();
+        assertThat(challengeParticipant.getChallenge().getDescription()).isEqualTo("잘해보자구~");
+        assertThat(challengeParticipant.getChallenge().getColor().getHexCode()).isEqualTo("FF0000");
+        assertThat(challengeParticipant.getChallenge().getColor().getName()).isEqualTo("RED");
     }
 
     @Test
@@ -84,21 +78,8 @@ public class ChallengeParticipantTest {
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_PROJECT_FOR_CHALLENGE.getMessage());
 
         //member null
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, null))
+        assertThatThrownBy(() -> ChallengeParticipant.create(challenge, null))
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.MISSING_MEMBER_FOR_CHALLENGE.getMessage());
-    }
-
-    @Test
-    @DisplayName("검증 실패: projectType이 CHALLENGE가 아니면 BaseException 반환")
-    public void create_fail_validation_project_type() throws Exception {
-        //given
-        project.changeProjectType(ProjectType.PERSONAL);
-
-        //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
-                .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.NOT_A_CHALLENGE_PROJECT.getMessage());
-        //then
-
     }
 
     @Test
@@ -116,15 +97,13 @@ public class ChallengeParticipantTest {
         ChallengeDetails challengeDetails = ChallengeDetails.of(3);
 
         //when
-        assertThatThrownBy(() -> Project.createChallenge(
+        assertThatThrownBy(() -> Challenge.create(
                 color,
                 member,
                 "   나의 프로젝트    ",
                 Status.PLANNING,
                 null,
                 "   잘해보자구~",
-                true,
-                Visibility.PUBLIC,
                 challengeDetails))
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_PERIOD_UNDEFINED.getMessage());
     }
@@ -134,12 +113,12 @@ public class ChallengeParticipantTest {
     public void create_fail_validation_project_period_before_start () throws Exception {
         //given
         LocalDate changeStart = LocalDate.now().plusDays(1);
-        Period periodChangeStart = Period.of(changeStart, project.getPeriod().endDate(), project.getPeriod().actualEndDate());
+        Period periodChangeStart = Period.of(changeStart, challenge.getPeriod().endDate(), challenge.getPeriod().actualEndDate());
 
-        project.changePeriod(periodChangeStart);
+        challenge.changePeriod(periodChangeStart);
 
         //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
+        assertThatThrownBy(() -> ChallengeParticipant.create(challenge, member))
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_NOT_START.getMessage());
     }
 
@@ -148,12 +127,12 @@ public class ChallengeParticipantTest {
     public void create_fail_validation_project_period_after_end () throws Exception {
         //given
         LocalDate changeEnd = LocalDate.now().minusDays(1);
-        Period periodChangeEnd = Period.of(project.getPeriod().startDate(), changeEnd, project.getPeriod().actualEndDate());
+        Period periodChangeEnd = Period.of(challenge.getPeriod().startDate(), changeEnd, challenge.getPeriod().actualEndDate());
 
-        project.changePeriod(periodChangeEnd);
+        challenge.changePeriod(periodChangeEnd);
 
         //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
+        assertThatThrownBy(() -> ChallengeParticipant.create(challenge, member))
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_ENDED.getMessage());
     }
 
@@ -161,32 +140,59 @@ public class ChallengeParticipantTest {
     @DisplayName("검증 실패: project status가 COMPLETE이면 BaseException 반환")
     public void create_fail_validation_project_status_complete() throws Exception {
         //given
-        project.changeStatus(Status.COMPLETED);
+        challenge.changeStatus(Status.COMPLETED);
 
         //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
+        assertThatThrownBy(() -> ChallengeParticipant.create(challenge, member))
                 .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_COMPLETED.getMessage());
     }
 
     @Test
-    @DisplayName("검증 실패: project visibility가 PRIVATE이면 BaseException 반환")
-    public void create_fail_validation_project_visibility_private() throws Exception {
+    @DisplayName("수정 실패: ChallengeDetails의 participantCount가 targetParticipant보다 크면 BaseException 반환")
+    public void create_fail_validation_challenge_details() throws Exception {
         //given
-        project.changeVisibility(Visibility.PRIVATE);
+        LocalDate startDate = LocalDate.now().minusDays(1);
+        LocalDate endDate = LocalDate.now().plusDays(1);
+        Color color = Color.create("RED", "FF0000");
+        Period period = Period.of(startDate, endDate, null);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(1);
 
         //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
-                .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_CANNOT_BE_PRIVATE.getMessage());
+        Challenge newChallenge = Challenge.create(
+                color,
+                member,
+                "   나의 프로젝트    ",
+                Status.PLANNING,
+                period,
+                "   잘해보자구~",
+                challengeDetails);
+
+        //then
+        assertThatThrownBy(() -> newChallenge.getChallengeDetails().increaseParticipant())
+                .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CANNOT_JOIN_FULL_CHALLENGE.getMessage());
     }
-
     @Test
-    @DisplayName("검증 실패: project isPublic이 false이면 BaseException 반환")
-    public void create_fail_validation_project_isPublic_false() throws Exception {
+    @DisplayName("수정 실패: ChallengeDetails의 participantCount가 0보다 작으면 BaseException 반환")
+    public void create_fail_validation_challenge_details_decrease() throws Exception {
         //given
-        project.changeIsPublic(false);
+        LocalDate startDate = LocalDate.now().minusDays(1);
+        LocalDate endDate = LocalDate.now().plusDays(1);
+        Color color = Color.create("RED", "FF0000");
+        Period period = Period.of(startDate, endDate, null);
+        ChallengeDetails challengeDetails = ChallengeDetails.of(1);
 
         //when
-        assertThatThrownBy(() -> ChallengeParticipant.create(project, member))
-                .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.CHALLENGE_CANNOT_BE_NO_PUBLIC.getMessage());
+        Challenge newChallenge = Challenge.create(
+                color,
+                member,
+                "   나의 프로젝트    ",
+                Status.PLANNING,
+                period,
+                "   잘해보자구~",
+                challengeDetails);
+
+        //then
+        assertThatThrownBy(() -> newChallenge.getChallengeDetails().decreaseParticipant())
+                .isInstanceOf(BaseException.class).hasMessage(BaseResponseStatus.INVALID_CHALLENGE_PARTICIPANT_COUNT.getMessage());
     }
 }

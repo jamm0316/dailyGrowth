@@ -4,11 +4,11 @@ import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
 import com.todoservice.dailygrowth.common.enums.DayLabel;
 import com.todoservice.dailygrowth.common.enums.Priority;
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.domain.auth.domain.oauth.vo.OAuth2Provider;
 import com.todoservice.dailygrowth.domain.color.entity.Color;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
+import com.todoservice.dailygrowth.domain.project.domain.entity.PersonalProject;
 import com.todoservice.dailygrowth.domain.project.domain.entity.Project;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
 import com.todoservice.dailygrowth.domain.task.domain.entity.Task;
@@ -35,15 +35,15 @@ public class TaskTest {
             "null",
             "testName");
 
-    private Project projectWithPeriod() {
-        return Project.createWithPeriod(color("RED", "#FF0000"), member, "프로젝트", Status.PLANNING,
-                Period.of(LocalDate.of(2005, 1, 1), LocalDate.of(2005, 12, 31), LocalDate.of(2005, 12, 31)),
-                "description", true, Visibility.PUBLIC);
+    private PersonalProject projectWithPeriod() {
+        return PersonalProject.createWithPeriod(color("RED", "#FF0000"), member, "프로젝트", Status.PLANNING,
+                Period.of(LocalDate.of(2005, 1, 1), LocalDate.of(2005, 12, 31),
+                        LocalDate.of(2005, 12, 31)), "description");
     }
 
     private Project project() {
-        return Project.create(color("RED", "#FF0000"), member,"프로젝트", Status.PLANNING,
-                "description", true, Visibility.PUBLIC);
+        return PersonalProject.create(color("RED", "#FF0000"), member,"프로젝트", Status.PLANNING,
+                "description");
     }
 
     @Test
@@ -133,8 +133,8 @@ public class TaskTest {
         Task task = Task.create(project(), Priority.HIGH,
                 "알고리즘 공부", "백준123", DayLabel.MORNING, Status.PLANNING);
 
-        Project newProject = Project.create(color("BLUE", "#0000FF"), member,"새로운 프로젝트",
-                Status.COMPLETED, "new description", true, Visibility.TEAM);
+        PersonalProject newProject = PersonalProject.create(color("BLUE", "#0000FF"), member,"새로운 프로젝트",
+                Status.COMPLETED, "new description");
 
         Color newColor = Color.create("GREEN", "#00FF00");
 

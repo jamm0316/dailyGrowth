@@ -1,10 +1,8 @@
 package com.todoservice.dailygrowth.domain.challenge.presentation.dto;
 
 import com.todoservice.dailygrowth.common.enums.Status;
-import com.todoservice.dailygrowth.common.enums.Visibility;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ChallengeDetails;
+import com.todoservice.dailygrowth.domain.challenge.domain.vo.ChallengeDetails;
 import com.todoservice.dailygrowth.domain.project.domain.vo.Period;
-import com.todoservice.dailygrowth.domain.project.domain.vo.ProjectType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -20,18 +18,10 @@ public record ChallengeCreateRequest(
         @NotNull(message = "상태값은 필수 입니다.")
         Status status,  //프로젝트 상태
 
-        @NotNull(message = "Project Type은 필수입니다.")
-        ProjectType projectType,
-
         @NotNull(message = "기간은 필수 입니다.")
         Period period,
+
         String description,  //설명
-
-        @NotNull(message = "공개 여부는 필수입니다.")
-        Boolean isPublic,  //공개 여부
-
-        @NotNull(message = "공개 범위는 필수입니다.")
-        Visibility visibility,  //공개 범위
 
         @NotNull(message = "챌린지 디테일은 필수 입니다.")
         ChallengeDetails challengeDetails  //챌린지 디테일
