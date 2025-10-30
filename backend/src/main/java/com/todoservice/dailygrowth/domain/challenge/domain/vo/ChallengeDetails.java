@@ -8,11 +8,11 @@ import jakarta.persistence.Embeddable;
 @Embeddable
 public record ChallengeDetails(
         Integer participantCount,
-        Integer targetParticipants,
+        Integer maxParticipant,
         ChallengeCategory challengeCategory
 ) {
     public ChallengeDetails {
-        validationChallengeDetails(participantCount, targetParticipants, challengeCategory);
+        validationChallengeDetails(participantCount, maxParticipant, challengeCategory);
     }
 
     private void validationChallengeDetails(int participantCount, int targetParticipants, ChallengeCategory challengeCategory) {
@@ -20,38 +20,34 @@ public record ChallengeDetails(
             throw new BaseException(BaseResponseStatus.INVALID_CHALLENGE_CAPACITY);
         }
 
-        if (participantCount <= 0) {
-            throw new BaseException(BaseResponseStatus.INVALID_CHALLENGE_PARTICIPANT_COUNT);
-        }
-
         if (targetParticipants < participantCount) {
-            throw new BaseException(BaseResponseStatus.CANNOT_JOIN_FULL_CHALLENGE);
+            throw new BaseException(BaseResponseStatus.CHALLENGE_FULL);
         }
     }
 
     static public ChallengeDetails of(int targetParticipants, ChallengeCategory challengeCategory) {
-        return new ChallengeDetails(1, targetParticipants, challengeCategory);
+        return new ChallengeDetails(0, targetParticipants, challengeCategory);
     }
 
     public ChallengeDetails increaseParticipant() {
-        if (participantCount + 1 > targetParticipants) {
-            throw new BaseException(BaseResponseStatus.CANNOT_JOIN_FULL_CHALLENGE);
+        if (participantCount + 1 > maxParticipant) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_FULL);
         }
-        return new ChallengeDetails(participantCount + 1, targetParticipants, challengeCategory);
+        return new ChallengeDetails(participantCount + 1, maxParticipant, challengeCategory);
     }
 
     public ChallengeDetails decreaseParticipant() {
         if (participantCount - 1 < 0) {
             throw new BaseException(BaseResponseStatus.INVALID_CHALLENGE_PARTICIPANT_COUNT);
         }
-        return new ChallengeDetails(participantCount - 1, targetParticipants, challengeCategory);
+        return new ChallengeDetails(participantCount - 1, maxParticipant, challengeCategory);
     }
 
     public boolean isFull() {
-        return participantCount == targetParticipants;
+        return participantCount == maxParticipant;
     }
 
     public boolean isNull() {
-        return participantCount == null && targetParticipants == null;
+        return participantCount == null && maxParticipant == null;
     }
 }

@@ -58,17 +58,50 @@ public class Challenge extends Project {
      **/
     static public Challenge create(Color color, Member member, String name, Status status, Period period,
                             String description, ChallengeDetails challengeDetails) {
-        return new Challenge(color, member, name, status, period, description, challengeDetails);
+        Challenge challenge = new Challenge(color, member, name, status, period, description, challengeDetails);
+        challenge.addParticipant(member);
+        return challenge;
     }
 
     public void addParticipant(Member member) {
+        //1. 이미 완료된 프로젝트인지 확인
+        if (this.getStatus() == Status.COMPLETED) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_COMPLETED);
+        }
+
+        //2. 이미 참여한 챌린지인지 검증
+        if (this.participants.stream().anyMatch(p -> p.getMember().getId().equals(member.getId()))) {
+            throw new BaseException(BaseResponseStatus.ALREADY_PARTICIPATING_IN_CHALLENGE);
+        }
+
+        //3. 최대 수용인원보다 현재 참여자 사이즈가 크거나 같은지 확인
+        if (challengeDetails.isFull()) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_FULL);
+        }
+
         ChallengeParticipant challengeParticipant = ChallengeParticipant.create(this, member);
         participants.add(challengeParticipant);
         challengeDetails = challengeDetails.increaseParticipant();
     }
 
-    public void removeParticipant(ChallengeParticipant participant) {
-        this.participants.remove(participant);
+    public void removeParticipant(Member member) {
+        //1. 이미 완료된 프로젝트인지 확인
+        if (this.getStatus() == Status.COMPLETED) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_COMPLETED);
+        }
+
+        //2. 참여자 목록에 있는 사람인지 확인
+        ChallengeParticipant challengeParticipant = this.participants.stream()
+                .filter(p -> p.getMember().getId().equals(member.getId()))
+                .findFirst()
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.PARTICIPANT_NOT_FOUND_INT_CHALLENGE));
+
+        //3. 챌린지 소유자는 나갈 수 없다. (챌린지 소유자가 나가면 Challenge 인스턴스를 삭제)
+        if (this.getMember().getId().equals(member.getId())) {
+            throw new BaseException(BaseResponseStatus.CHALLENGE_OWNER_CANNOT_LEAVE);
+        }
+
+        this.participants.remove(challengeParticipant);
         challengeDetails = challengeDetails.decreaseParticipant();
     }
 }
