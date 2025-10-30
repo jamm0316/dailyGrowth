@@ -63,11 +63,14 @@ public enum BaseResponseStatus {
     CHALLENGE_COMPLETED(false, 6507, "이미 완료된 프로젝트 입니다."),
     CHALLENGE_CANNOT_BE_PRIVATE(false, 6508, "Challenge는 개인 프로젝트이면 안됩니다."),
     CHALLENGE_CANNOT_BE_NO_PUBLIC(false, 6509, "Challenge는 비공개이면 안됩니다."),
-    CANNOT_JOIN_FULL_CHALLENGE(false, 6510, "챌린지가 가득 차서 참여할 수 없습니다."),
     INVALID_CHALLENGE_CAPACITY(false, 6511, "정원은 0명 이상이여야 합니다."),
     INVALID_CHALLENGE_PARTICIPANT_COUNT(false, 6512, "참여자는 0명 이상이여야 합니다."),
     MISSING_CHALLENGE_DETAILS(false, 6513, "ChallengeDetails가 null입니다."),
     CHALLENGE_DETAILS_NOT_ALLOWED_FOR_NON_CHALLENGE(false, 6514, "ProjectType.PERSONAL은 ChallengeDetails가 null이어야 합니다."),
+    CHALLENGE_FULL(false, 6515, "Challenge 참여인원이 꽉 찼습니다."),
+    ALREADY_PARTICIPATING_IN_CHALLENGE(false, 6516, "Challenge에 이미 참여중입니다."),
+    PARTICIPANT_NOT_FOUND_INT_CHALLENGE(false, 6517, "Challenge에 참여자 명단에 없는 회원입니다."),
+    CHALLENGE_OWNER_CANNOT_LEAVE(false, 6518, "Challenge 소유주는 나갈 수 없습니다."),
 
     /**
      * 7000: Task 오류
