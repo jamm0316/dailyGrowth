@@ -1,7 +1,6 @@
 package com.todoservice.dailygrowth.domain.challenge.domain.entity;
 
 import com.todoservice.dailygrowth.common.baseResponse.BaseResponseStatus;
-import com.todoservice.dailygrowth.common.enums.Status;
 import com.todoservice.dailygrowth.common.exception.BaseException;
 import com.todoservice.dailygrowth.common.superEntity.SuperEntity;
 import com.todoservice.dailygrowth.domain.member.domain.entity.Member;
@@ -41,14 +40,14 @@ public class ChallengeParticipant extends SuperEntity {
     @Column(nullable = false, updatable = false)
     private LocalDateTime joinedDateTime;
 
-    public ChallengeParticipant(Challenge challenge, Member member, LocalDateTime joinedDateTime) {
-        validateDomainInvariants(challenge, member, joinedDateTime);
+    public ChallengeParticipant(Challenge challenge, Member member) {
+        validateDomainInvariants(challenge, member);
         this.challenge = challenge;
         this.member = member;
-        this.joinedDateTime = joinedDateTime;
+        this.joinedDateTime = LocalDateTime.now();
     }
 
-    private void validateDomainInvariants(Challenge challenge, Member member, LocalDateTime joinedDateTime) {
+    private void validateDomainInvariants(Challenge challenge, Member member) {
         //1. 기본 null 확인
         if (challenge == null) {
             throw new BaseException(BaseResponseStatus.MISSING_PROJECT_FOR_CHALLENGE);
@@ -56,36 +55,28 @@ public class ChallengeParticipant extends SuperEntity {
         if (member == null) {
             throw new BaseException(BaseResponseStatus.MISSING_MEMBER_FOR_CHALLENGE);
         }
-        //todo: 3. 회원이 이미 참여했는지 확인
 
-        //todo: 4. 챌린지가 가득 찼는지 확인
-
-        //5. 날짜 유효성 검사
         if (challenge.getPeriod() == null || challenge.getPeriod().isNull()) {
             throw new BaseException(BaseResponseStatus.CHALLENGE_PERIOD_UNDEFINED);
         }
 
-        LocalDate joinedDate = joinedDateTime.toLocalDate();
+        //2. 날짜 유효성 검사
+        LocalDate joinedDate = LocalDate.now();
         LocalDate start = challenge.getPeriod().startDate();
         LocalDate end = challenge.getPeriod().endDate();
 
-        //5-1. joinedDateTime이 시작 날짜보다 이전인지 확인
+        //2-1. joinedDateTime이 시작 날짜보다 이전인지 확인
         if (joinedDate.isBefore(start)) {
             throw new BaseException(BaseResponseStatus.CHALLENGE_NOT_START);
         }
 
-        //5-2. joinedDateTime이 종료 날짜보다 이후인지 확인
+        //2-2. joinedDateTime이 종료 날짜보다 이후인지 확인
         if (end != null && joinedDate.isAfter(end)) {
             throw new BaseException(BaseResponseStatus.CHALLENGE_ENDED);
-        }
-
-        //6. 이미 완료된 프로젝트인지 확인
-        if (challenge.getStatus() == Status.COMPLETED) {
-            throw new BaseException(BaseResponseStatus.CHALLENGE_COMPLETED);
         }
     }
 
     static public ChallengeParticipant create(Challenge challenge, Member member) {
-        return new ChallengeParticipant(challenge, member, LocalDateTime.now());
+        return new ChallengeParticipant(challenge, member);
     }
 }
